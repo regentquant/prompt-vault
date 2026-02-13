@@ -1,4 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="#8b7355"/>
-  <text x="16" y="22.5" text-anchor="middle" font-family="monospace" font-weight="700" font-size="20" fill="#f8f6f1">&gt;_</text>
+  <style>
+    rect { fill: #8b7355; }
+    path { fill: #f8f6f1; }
+    @media (prefers-color-scheme: dark) {
+      rect { fill: #c4a87a; }
+      path { fill: #1a1915; }
+    }
+  </style>
+  <rect width="32" height="32" rx="7"/>
+  <svg x="5" y="5" width="22" height="22" viewBox="0 -960 960 960">
+    <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-400H160v400Zm140-40-56-56 103-104-104-104 57-56 160 160-160 160Zm180 0v-80h240v80H480Z"/>
+  </svg>
 </svg>
