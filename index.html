@@ -90,6 +90,34 @@
       line-height: 1.45;
     }
 
+    /* ---- Quick links ---- */
+    .quick-links {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .quick-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      color: var(--text-secondary);
+      opacity: 0.55;
+      transition: opacity 0.15s ease, color 0.15s ease;
+    }
+
+    .quick-links a:hover {
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    .quick-links a img {
+      width: 20px;
+      height: 20px;
+    }
+
     .sidebar-label {
       font-size: 0.68rem;
       font-weight: 600;
@@ -378,6 +406,10 @@
         margin-bottom: 12px;
       }
 
+      .quick-links {
+        margin-bottom: 16px;
+      }
+
       .sidebar-label {
         margin-bottom: 8px;
       }
@@ -439,6 +471,20 @@
       <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme"></button>
     </div>
     <div class="sidebar-subtitle">A curated library of prompts for AI coding and conversation.</div>
+    <div class="quick-links">
+      <a href="https://claude.ai/new" target="_blank" rel="noopener" title="Claude">
+        <img src="assets/claude.svg" alt="Claude">
+      </a>
+      <a href="https://chatgpt.com/" target="_blank" rel="noopener" title="ChatGPT">
+        <img src="assets/chatgpt.svg" alt="ChatGPT">
+      </a>
+      <a href="https://gemini.google.com/app" target="_blank" rel="noopener" title="Gemini">
+        <img src="assets/gemini.svg" alt="Gemini">
+      </a>
+      <a href="https://grok.com/" target="_blank" rel="noopener" title="Grok">
+        <img src="assets/grok.svg" alt="Grok">
+      </a>
+    </div>
     <div class="sidebar-label">Categories</div>
     <ul class="sidebar-nav" id="categoryNav"></ul>
     <div class="sidebar-total" id="totalCount"></div>
