@@ -333,6 +333,20 @@
       white-space: nowrap;
     }
 
+    .popular-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      color: var(--accent);
+      background: var(--tag-bg);
+      border: 1px solid var(--accent);
+      padding: 2px 7px;
+      white-space: nowrap;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
     .copy-btn {
       font-family: 'DM Sans', sans-serif;
       font-size: 0.78rem;
@@ -580,6 +594,7 @@
         id: "auto-plan-code",
         title: "AUTO Plan & Code",
         category: "Coding Agents",
+        popular: true,
         description: "Forces the agent to output a full plan before touching any code, then execute without stopping.",
         prompt: `# AUTO Plan & Code\n\n1. Before writing or editing any code, first output a detailed step-by-step plan (files to modify, specific changes, rationale)
 2. Immediately execute the full plan without pausing for confirmation`,
@@ -589,6 +604,7 @@
         id: "auto-commit-workflow",
         title: "AUTO Commit Workflow",
         category: "Coding Agents",
+        popular: true,
         description: "One commit per logical task, concise subject lines, no hook skipping.",
         prompt: `# AUTO Commit Workflow\n\n- **Commit and push once per task**, not after every individual file change
 - A "task" is one logical unit of work (e.g., a feature, a bug fix, a refactor) — bundle all related file changes into a single commit
@@ -734,6 +750,7 @@ When generating frontend UI code, **never** fall into these patterns. They are t
         id: "knowledge-extractor",
         title: "Knowledge Extractor",
         category: "Writing & Editing",
+        popular: true,
         description: "Ruthlessly extracts signal from any content format — books, articles, podcasts, papers — cutting straight to what actually matters.",
         prompt: `# Knowledge Extractor\n\nYou are a ruthless knowledge extractor. Most content has far less signal than its length suggests — your job is to prove it.\n\n**First, identify the content format** (book, article, research paper, podcast transcript, video transcript, lecture, blog post, etc.). Adapt your reading lens accordingly — a research paper front-loads its contribution differently than a book, a podcast meanders differently than an essay — but apply the same extraction rigor regardless.\n\nHere's how to work:\n\n1. **Process the entire content first.** Do not start writing anything until you've processed the full content. You need the full picture before you can judge what actually matters versus what's filler, repetition, or anecdote padding.\n\n2. **Identify the real signal.** Ask yourself:\n   - What are the genuinely novel ideas here — things that would change how someone thinks or acts?\n   - What would the source say if they had 10 minutes instead of the full length?\n   - Which concepts are load-bearing (the argument collapses without them) vs decorative (examples, stories, restated points)?\n   - Is the source saying one big thing, or several independent things?\n\n3. **Design your own structure.** Do NOT default to a sequential section-by-section summary. That just mirrors the original's padding. Instead, organize around the actual ideas. Maybe that's:\n   - One core thesis + the key supporting mechanisms\n   - A set of independent principles\n   - A mental model or framework\n   - A before/after shift in understanding\n   - A decision tree or flowchart of thinking\n   - Something else entirely — whatever best fits THIS content's actual contribution\n\n   Let the content dictate the form. A piece built around one powerful idea needs a different layout than one presenting twelve loosely related tactics.\n\n4. **Be honest about the content's density.** Some pieces have 3 real ideas stretched across far more length than warranted. Say so. Others are genuinely dense with insight. Reflect that. Your summary should be proportional to the actual insight density, not the content length.\n\n5. **Include the sharpest formulations.** If the source said something in a particularly memorable or precise way — a line that captures a whole concept — quote it directly. These are the bits people actually remember and use.\n\n6. **Flag what's actionable.** Separate "interesting to know" from "changes what you do." If the content has practical applications, make them concrete and immediately usable — not vague takeaways like "think more strategically."\n\n7. **Note what the source gets wrong or overstates.** If an idea is presented as universal but clearly has limits, say so. If the evidence is weak for a bold claim, flag it. The reader deserves your honest assessment, not a sales pitch for the content.\n\n**Your output should feel like what a brilliant friend would tell you over coffee after consuming the content — cutting straight to what's worth knowing, skipping everything that isn't, and being honest about the whole thing.**\n\nThe content follows below:\n[PASTE FULL CONTENT — book text, article, transcript, paper, etc.]`,
         tags: ["writing", "summarization", "knowledge", "extraction"]
@@ -1280,6 +1297,7 @@ If the company is Chinese-listed or a Chinese ADR:
         id: "unified-design-system",
         title: "Unified Design System",
         category: "Coding Agents",
+        popular: true,
         description: "Audits existing styling and refactors it into a cohesive design system with semantic tokens, utility classes, canonical components, and enforced template reuse.",
         prompt: `# Unified Design System\n\nPlease audit and refactor my existing styling into a cohesive design system.\n\n## Context\n\n- Respect existing visual language unless explicitly improving consistency.\n- Prefer existing tokens/utilities/components over creating new one-off patterns.\n- If a new pattern is needed, add it to the shared system first, then consume it.\n\n## Phase 1: Token Foundation\n\n- Audit current styling approach (Tailwind / vanilla CSS / CSS-in-JS).\n- Inventory existing tokens and style sources.\n- Normalize into semantic tokens:\n  - Colors (including tint/subtle variants)\n  - Spacing scale\n  - Typography scale\n  - Radius, shadows, z-index, transitions\n- Reference existing design files/style guides and preserve compatibility.\n\n## Phase 2: Utility Layer\n\n- Build/standardize utility classes for:\n  - Layout: flex, grid, gap, alignment, sizing\n  - Spacing: margin/padding scales\n  - Typography: size, weight, color, alignment\n  - Visual helpers: rounded, shadow, border, background, display\n- Remove duplicate/overlapping utilities.\n\n## Phase 3: Component Library\n\n- Define canonical reusable components for common UI patterns:\n  - Buttons (all variants/states)\n  - Badges\n  - Alerts\n  - Forms/inputs\n  - Tables\n  - Cards\n  - Modals\n  - Section headers\n- Match current product style and interaction behavior.\n\n## Template Enforcement (Mandatory)\n\n- For every use case, map existing UI to canonical components before editing.\n- Reuse canonical templates for matching use cases; do not create ad-hoc local structures/classes.\n- If two areas solve the same UI problem, they must share the same template and density rules.\n- Any exception must be explicitly listed with justification.\n\n## Phase 4: Page Refactoring\n\n- Replace inline styles with tokens/utilities/component classes.\n- Keep inline style only for true runtime-dynamic values.\n- Preserve behavior and existing UX flows.\n\n## Required Deliverables\n\n- Design System Audit Summary (what exists, what changed, what was removed).\n- Token Dictionary (final names and meaning).\n- Component Mapping Report (old pattern -> canonical component).\n- Template Coverage Report (files updated + justified exceptions).\n- Before/after notes for visual consistency improvements.\n\n## Acceptance Criteria\n\n- Consistent spacing rhythm, typography, component density, and state styling across pages.\n- Same use case = same template.\n- Minimal cognitive load and minimal style duplication.\n- No functional regressions.`,
         tags: ["claude-md", "design-system", "css", "refactoring", "ui"]
@@ -1359,6 +1377,9 @@ If the company is Chinese-listed or a Chinese ADR:
         if (!groups.has(p.category)) groups.set(p.category, []);
         groups.get(p.category).push(p);
       }
+      for (const [, list] of groups) {
+        list.sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
+      }
       return groups;
     }
 
@@ -1391,7 +1412,7 @@ If the company is Chinese-listed or a Chinese ADR:
             <div class="prompt-row" data-id="${p.id}">
               <div class="prompt-summary" onclick="togglePrompt('${p.id}')">
                 <div class="prompt-left">
-                  <div class="prompt-title">${esc(p.title)}</div>
+                  <div class="prompt-title">${esc(p.title)}${p.popular ? '<span class="popular-badge">Popular</span>' : ''}</div>
                   <div class="prompt-desc">${esc(p.description)}</div>
                 </div>
                 <div class="prompt-right">
