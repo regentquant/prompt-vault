@@ -2,6 +2,27 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Project Overview
+
+Prompt Vault is a static single-page web app — a curated library of AI prompts with category filtering, search, copy-to-clipboard, and Firebase-backed copy counts. The entire app lives in one file: `index.html`.
+
+## Architecture
+
+**Single-file app** (`index.html`): contains all HTML, CSS (in `<style>`), and JavaScript (in `<script>`). No build step, no bundler, no framework.
+
+- **Prompt data**: hardcoded in the `PROMPTS` array (JS objects with `id`, `title`, `category`, `description`, `prompt`, `tags`). To add/edit/remove prompts, modify this array directly.
+- **Rendering**: vanilla JS functions (`renderNav`, `renderPrompts`) rebuild the DOM from `PROMPTS` on every filter/search change. No virtual DOM or reactivity library.
+- **Firebase**: Firebase Realtime Database (compat SDK loaded via CDN) tracks per-prompt copy counts. Config is inline. Copy counts use `ref.transaction()` for atomic increments and `.on('value')` for live updates.
+- **Styling**: CSS custom properties in `:root` control the design system (colors, sidebar width). Responsive layout via `@media (max-width: 768px)` — sidebar becomes horizontal nav on mobile.
+
+## Development
+
+No build or install commands. Open `index.html` in a browser to develop locally. Copy counts require internet (Firebase).
+
+## Deployment
+
+GitHub Pages via `.github/workflows/deploy.yml` — auto-deploys the repo root on push to `main`.
+
 # AUTO Plan & Code
 
 1. Before writing or editing any code, first output a detailed step-by-step plan (files to modify, specific changes, rationale)
