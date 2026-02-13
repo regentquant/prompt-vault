@@ -454,6 +454,13 @@
         padding-bottom: 0;
         scrollbar-width: none;
         -ms-overflow-style: none;
+        -webkit-mask-image: linear-gradient(to right, black calc(100% - 40px), transparent);
+        mask-image: linear-gradient(to right, black calc(100% - 40px), transparent);
+      }
+
+      .sidebar-nav.scrolled-end {
+        -webkit-mask-image: none;
+        mask-image: none;
       }
 
       .sidebar-nav::-webkit-scrollbar {
@@ -1488,6 +1495,12 @@ If the company is Chinese-listed or a Chinese ADR:
     }
 
     applyTheme(getPreferredTheme());
+
+    // Mobile nav scroll fade hint
+    categoryNav.addEventListener('scroll', () => {
+      const atEnd = categoryNav.scrollLeft + categoryNav.clientWidth >= categoryNav.scrollWidth - 2;
+      categoryNav.classList.toggle('scrolled-end', atEnd);
+    });
 
     // Initial render
     renderNav();
