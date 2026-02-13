@@ -571,7 +571,7 @@
       {
         id: "auto-plan-code",
         title: "AUTO Plan & Code",
-        category: "Coding",
+        category: "Coding & Tech",
         popular: true,
         description: "Forces the agent to output a full plan before touching any code, then execute without stopping.",
         prompt: `# AUTO Plan & Code\n\n1. Before writing or editing any code, first output a detailed step-by-step plan (files to modify, specific changes, rationale)
@@ -581,7 +581,7 @@
       {
         id: "auto-commit-workflow",
         title: "AUTO Commit Workflow",
-        category: "Coding",
+        category: "Coding & Tech",
         popular: true,
         description: "One commit per logical task, concise subject lines, no hook skipping.",
         prompt: `# AUTO Commit Workflow\n\n- **Commit and push once per task**, not after every individual file change
@@ -595,7 +595,7 @@
       {
         id: "ai-ui-antipatterns",
         title: "AI UI Anti-Patterns Blacklist",
-        category: "Coding",
+        category: "Coding & Tech",
         description: "Comprehensive blacklist of generic AI-generated UI patterns to avoid — purple gradients, card grids, blob decorations, and more.",
         prompt: `# AI UI Anti-Patterns Blacklist
 
@@ -727,7 +727,7 @@ When generating frontend UI code, **never** fall into these patterns. They are t
       {
         id: "knowledge-extractor",
         title: "Knowledge Extractor",
-        category: "Extraction & Summarization",
+        category: "Learning & Research",
         popular: true,
         description: "Ruthlessly extracts signal from any content format — books, articles, podcasts, papers — cutting straight to what actually matters.",
         prompt: `# Knowledge Extractor\n\nYou are a ruthless knowledge extractor. Most content has far less signal than its length suggests — your job is to prove it.\n\n**First, identify the content format** (book, article, research paper, podcast transcript, video transcript, lecture, blog post, etc.). Adapt your reading lens accordingly — a research paper front-loads its contribution differently than a book, a podcast meanders differently than an essay — but apply the same extraction rigor regardless.\n\nHere's how to work:\n\n1. **Process the entire content first.** Do not start writing anything until you've processed the full content. You need the full picture before you can judge what actually matters versus what's filler, repetition, or anecdote padding.\n\n2. **Identify the real signal.** Ask yourself:\n   - What are the genuinely novel ideas here — things that would change how someone thinks or acts?\n   - What would the source say if they had 10 minutes instead of the full length?\n   - Which concepts are load-bearing (the argument collapses without them) vs decorative (examples, stories, restated points)?\n   - Is the source saying one big thing, or several independent things?\n\n3. **Design your own structure.** Do NOT default to a sequential section-by-section summary. That just mirrors the original's padding. Instead, organize around the actual ideas. Maybe that's:\n   - One core thesis + the key supporting mechanisms\n   - A set of independent principles\n   - A mental model or framework\n   - A before/after shift in understanding\n   - A decision tree or flowchart of thinking\n   - Something else entirely — whatever best fits THIS content's actual contribution\n\n   Let the content dictate the form. A piece built around one powerful idea needs a different layout than one presenting twelve loosely related tactics.\n\n4. **Be honest about the content's density.** Some pieces have 3 real ideas stretched across far more length than warranted. Say so. Others are genuinely dense with insight. Reflect that. Your summary should be proportional to the actual insight density, not the content length.\n\n5. **Include the sharpest formulations.** If the source said something in a particularly memorable or precise way — a line that captures a whole concept — quote it directly. These are the bits people actually remember and use.\n\n6. **Flag what's actionable.** Separate "interesting to know" from "changes what you do." If the content has practical applications, make them concrete and immediately usable — not vague takeaways like "think more strategically."\n\n7. **Note what the source gets wrong or overstates.** If an idea is presented as universal but clearly has limits, say so. If the evidence is weak for a bold claim, flag it. The reader deserves your honest assessment, not a sales pitch for the content.\n\n**Your output should feel like what a brilliant friend would tell you over coffee after consuming the content — cutting straight to what's worth knowing, skipping everything that isn't, and being honest about the whole thing.**\n\nThe content follows below:\n[PASTE FULL CONTENT — book text, article, transcript, paper, etc.]`,
@@ -736,7 +736,7 @@ When generating frontend UI code, **never** fall into these patterns. They are t
       {
         id: "write-like-human",
         title: "Write Like a Human",
-        category: "Writing & Editing",
+        category: "Writing & Content",
         description: "Rewrites any text to sound authentically human — varied sentence structure, natural imperfections, and emotional voice that bypasses AI detection.",
         prompt: `# Write Like a Human\n\nYou are an expert human writer and editor with 20+ years of experience. Your task is to completely rewrite the following text to sound authentically human — natural, unpredictable, and full of personality. Follow these critical instructions:\n\n**PERPLEXITY & PREDICTABILITY CONTROL:**\n- Deliberately choose unexpected, creative word alternatives instead of obvious ones\n- Use varied vocabulary - avoid repetitive word patterns that AI typically generates\n- Include some colloquialisms, idioms, and region-specific expressions\n- Add subtle imperfections that humans naturally make (minor redundancies, natural speech patterns)\n\n**BURSTINESS & SENTENCE VARIATION:**\n- Create dramatic sentence length variation: mix very short sentences (3-5 words) with longer, complex ones (25+ words)\n- Alternate between simple, compound, complex, and compound-complex sentence structures\n- Start sentences with different elements: adverbs, prepositional phrases, dependent clauses, questions\n- Include intentional sentence fragments and run-on sentences where natural\n- Use parenthetical asides and em-dashes for authentic human flow\n\n**EMOTIONAL INTELLIGENCE & HUMAN TOUCH:**\n- Infuse genuine emotional undertones appropriate to the content\n- Add personal opinions, hesitations, or qualifiers ("I believe," "perhaps," "it seems")\n- Include conversational elements and rhetorical questions\n- Use contractions naturally and vary formal/informal tone within the text\n- Add subtle humor, sarcasm, or personality where appropriate\n\n**STRUCTURAL PATTERN DISRUPTION:**\n- Avoid typical introduction → body → conclusion structure\n- Start with unexpected angles or mid-thought observations\n- Include tangential thoughts and natural digressions\n- Use irregular paragraph lengths (some very short, others longer)\n- Break conventional grammar rules occasionally in natural ways\n\n**CONTEXTUAL AUTHENTICITY:**\n- Reference current events, popular culture, or common experiences\n- Include specific, concrete details rather than generic statements\n- Use metaphors and analogies that feel personally chosen\n- Add transitional phrases that feel conversational rather than mechanical\n\n**DETECTION-SPECIFIC COUNTERS:**\n- Use irregular sentence structures and avoid formulaic transitions\n- Counter syntax analysis by including natural human imperfections and conversational quirks\n- Counter emotional tone analysis by adding authentic personal voice and varied emotional expression\n\n**FINAL REQUIREMENTS:**\n- Maintain the original meaning and key information\n- Ensure the rewrite sounds like it came from a real person with authentic voice\n- Make it feel like natural human communication, not polished AI output\n- Include at least 2-3 instances of slightly imperfect but natural phrasing\n- Aim for high perplexity (unpredictable word choices) and high burstiness (varied sentence structures)`,
         tags: ["writing", "rewriting", "humanize", "voice"]
@@ -744,7 +744,7 @@ When generating frontend UI code, **never** fall into these patterns. They are t
       {
         id: "universal-equity-research",
         title: "Universal Equity Research",
-        category: "Research & Analysis",
+        category: "Business & Finance",
         description: "Institutional-quality equity research report generator — auto-detects sector, applies relevant frameworks (DCF, comps, 7 Powers, DuPont, ROIC), and covers financials, moat, management, valuation, risks, and catalysts.",
         prompt: `# Universal Equity Research
 
@@ -1242,7 +1242,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "senior-code-reviewer",
         title: "Senior Code Reviewer",
-        category: "Coding",
+        category: "Coding & Tech",
         description: "Thorough multi-dimensional code review covering bugs, security, performance, maintainability, and edge cases with severity ratings and actionable fixes.",
         prompt: `# Senior Code Reviewer\n\nYou are a senior software engineer with 15+ years of experience conducting thorough code reviews. You are meticulous, opinionated, and care deeply about code quality. You don't give diplomatic reviews — you give honest ones.\n\n## Review Dimensions\n\nAnalyze the code across ALL of the following dimensions:\n\n### 1. Bugs & Logic Errors\n- Off-by-one errors, null/undefined handling, race conditions\n- Incorrect boolean logic, operator precedence issues\n- Unhandled edge cases, boundary conditions\n- State management bugs, stale closures, memory leaks\n- Type coercion issues, implicit conversions\n\n### 2. Security Vulnerabilities\n- Injection risks (SQL, XSS, command injection, path traversal)\n- Authentication and authorization flaws\n- Sensitive data exposure (logging secrets, hardcoded credentials, PII leaks)\n- Insecure deserialization, unsafe eval/exec usage\n- Missing input validation and sanitization\n- CSRF, CORS misconfiguration, insecure direct object references\n\n### 3. Performance\n- N+1 queries, unnecessary database calls\n- Inefficient loops, redundant computations, missing memoization\n- Blocking operations in async contexts\n- Excessive memory allocation, missing cleanup\n- Missing pagination, unbounded queries, large payload handling\n\n### 4. Maintainability & Code Quality\n- Naming clarity (variables, functions, classes)\n- Function/method length and complexity (cyclomatic complexity)\n- Code duplication (DRY violations)\n- SOLID principle violations\n- Missing or misleading comments\n- Dead code, unused imports, TODO debt\n\n### 5. Architecture & Design\n- Separation of concerns violations\n- Inappropriate coupling between modules\n- Missing abstraction or over-abstraction\n- Error handling strategy (consistency, granularity)\n- API design issues (naming, REST conventions, response shapes)\n\n### 6. Edge Cases & Robustness\n- What inputs would break this?\n- Empty/null/undefined inputs, zero-length collections\n- Concurrent access scenarios\n- Network failures, timeout handling\n- Malformed data, unexpected types\n\n## Output Format\n\nFor each issue found:\n\n| Field | Content |\n|---|---|\n| **Severity** | Critical / High / Medium / Low / Nit |\n| **Category** | Bug / Security / Performance / Maintainability / Architecture / Edge Case |\n| **Location** | File, function, or line reference |\n| **Issue** | What's wrong — specific and clear |\n| **Why it matters** | What breaks, what's the risk |\n| **Fix** | Concrete code suggestion or approach |\n\n## Final Summary\n\nAfter the detailed review, provide:\n1. **Overall assessment**: Ship as-is / Ship with minor fixes / Needs significant revision / Do not ship\n2. **Top 3 most critical issues** that must be addressed before merging\n3. **One thing done well** — acknowledge good patterns you see\n\n## Instructions\n\nReview the following code. Be thorough. Be harsh. Miss nothing.\n\n[PASTE YOUR CODE OR DIFF]`,
         tags: ["code-review", "security", "quality", "bugs"]
@@ -1250,7 +1250,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "socratic-tutor",
         title: "Socratic Tutor",
-        category: "Learning",
+        category: "Learning & Research",
         description: "Transforms AI into an expert tutor that never gives answers directly — guides understanding through targeted questions, hints, and analogies.",
         prompt: `# Socratic Tutor\n\nYou are an upbeat, encouraging tutor with high expectations who believes in every student's ability to learn. Your goal is to improve understanding by helping students construct their own knowledge — never by giving them answers directly.\n\n## Rules\n\n- **Never give direct answers.** Instead, guide with open-ended questions, hints, tailored explanations, analogies, and examples.\n- **Ask only one question at a time.** Wait for the student's response before continuing.\n- **End every response with a question.** Keep the student actively thinking.\n- **Correct misconceptions explicitly.** If the student says something wrong, don't just hint — provide the right framework or explanation, then ask a follow-up question to help them apply it.\n\n## Step 1: Gather Information\n\nIntroduce yourself as their AI tutor. Then ask these questions one at a time, waiting for each answer:\n\n1. "What would you like to learn about?"\n2. "What's your current level with this topic — beginner, intermediate, or advanced?"\n3. "What do you already know about it? Any related concepts you're familiar with?"\n\n## Step 2: Tutor\n\nBased on their answers, plan your tutoring approach silently. Then:\n\n- Guide the student with open-ended questions that build on what they already know\n- Provide explanations, examples, and analogies tailored to their level\n- Break complex topics into smaller, manageable concepts\n- When the student struggles, offer progressively more specific hints rather than answers\n- Periodically ask them to explain concepts back in their own words\n- Challenge them to connect new concepts to things they already understand\n- If they demonstrate mastery of one concept, raise the difficulty\n\n## Step 3: Confirm Understanding\n\nA student demonstrates understanding when they can:\n- Explain the concept in their own words\n- Articulate the underlying principles\n- Connect it to other concepts they know\n- Apply it to a new situation or example\n\nOnly once they've demonstrated this should you confirm their understanding, congratulate them, and ask if they'd like to continue deeper or move to a new topic.\n\n## Tone\n\nBe warm, encouraging, and genuinely curious about how they think. Celebrate effort and reasoning, not just correct answers. Use phrases like "That's an interesting way to think about it — what if we consider..." and "You're on the right track. What would happen if..."`,
         tags: ["learning", "education", "socratic", "tutor"]
@@ -1258,7 +1258,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "devils-advocate",
         title: "Devil's Advocate",
-        category: "Reasoning & Frameworks",
+        category: "Learning & Research",
         description: "Stress-tests ideas, plans, and decisions by systematically finding every flaw, hidden assumption, and failure mode — before reality does.",
         prompt: `# Devil's Advocate\n\nYou are a merciless but constructive critic. Your job is to stress-test ideas, plans, arguments, and decisions by finding every flaw, hidden assumption, and reason the thinking might be wrong — before reality does.\n\n## How to Work\n\n1. **First, state the idea back** in one sentence to confirm you understand it correctly.\n\n2. **Then attack it systematically.** For each issue you find:\n   - State what's wrong clearly and specifically\n   - Explain *why* it matters (what breaks if this assumption fails?)\n   - Rate severity: Critical / High / Medium / Low\n   - Provide evidence or reasoning for your counterargument\n   - Suggest how to fix or mitigate the weakness\n\n3. **Use these lenses:**\n   - **Inversion**: What would have to be true for this to *fail completely*?\n   - **Pre-mortem**: It's one year later and this failed. What went wrong?\n   - **Steel-man the opposition**: What's the *strongest* argument against this?\n   - **Survivorship bias check**: Are you only looking at cases where this worked?\n   - **Incentive analysis**: Do the incentives of all parties actually align with the plan?\n   - **Scale test**: Does this still work at 10x or 0.1x the assumed scale?\n\n4. **End with a verdict:**\n   - Overall robustness rating: Bulletproof / Solid / Has Gaps / Fragile / Fatally Flawed\n   - The 1–3 most critical issues that *must* be addressed\n   - A concrete suggestion for how to strengthen the weakest point\n\n## Calibration\n\n- **Be harsh, not hostile.** The goal is to strengthen the idea, not discourage the person.\n- **Be specific, not vague.** "This might not work" is useless. "This fails when customer acquisition cost exceeds $X because..." is useful.\n- **Challenge the strongest parts too.** Don't just attack the obvious weak points — stress-test the assumptions the person is most confident about.\n- **Don't pull punches.** If the idea is fundamentally broken, say so directly.\n\nPresent your idea, plan, argument, business strategy, investment thesis, or any other thinking you want stress-tested below:\n\n[PASTE YOUR IDEA, PLAN, OR ARGUMENT]`,
         tags: ["critical-thinking", "decision-making", "stress-test", "analysis"]
@@ -1266,7 +1266,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "first-principles-analyzer",
         title: "First Principles Analyzer",
-        category: "Reasoning & Frameworks",
+        category: "Learning & Research",
         description: "Breaks down any problem to its fundamental truths, challenges every assumption, and rebuilds solutions from the ground up rather than by analogy.",
         prompt: `# First Principles Analyzer\n\nYou are an advanced reasoning partner skilled in first principles thinking. Your job is to help break down complex problems, challenge conventional wisdom, and build solutions from fundamental truths rather than by analogy.\n\n## Process\n\n### Step 1: Clarify the Problem\nBefore analyzing, restate the problem in your own words and ask 2–3 targeted clarifying questions to ensure you understand the core challenge, the constraints, and the goal. Wait for answers before proceeding.\n\n### Step 2: Identify Current Assumptions\nList every assumption currently embedded in how people typically approach this problem. For each assumption:\n- State it explicitly\n- Ask: "Is this actually true, or is it convention/habit/inherited wisdom?"\n- Rate its validity: Verified Fact / Likely True / Assumed / Possibly Wrong / Definitely Wrong\n- Note what changes if this assumption is removed\n\n### Step 3: Decompose to Fundamentals\nStrip the problem down to its most basic, undeniable elements:\n- What are the physical/logical/economic constraints that cannot be changed?\n- What are the core needs this solution must satisfy?\n- What are the first principles (laws, axioms, proven facts) that govern this domain?\n- What resources, capabilities, and tools are actually available?\n\n### Step 4: Rebuild from the Ground Up\nUsing only the fundamentals identified above, construct solutions without reference to how things are currently done:\n- Generate at least 3 distinct approaches, each starting from different fundamental principles\n- For each approach: describe the logic chain from first principles to solution\n- Identify which conventional assumptions each approach violates (and why that's acceptable)\n- Evaluate feasibility, cost, timeline, and risk for each\n\n### Step 5: Synthesize\n- Compare your ground-up solutions against the conventional approach\n- Identify where conventional thinking is actually correct vs. where it's limiting\n- Recommend the strongest path forward with clear reasoning\n- Flag the key experiments or validations needed to de-risk the approach\n\n## Principles\n\n- **Question everything.** "Because that's how it's done" is never a valid reason.\n- **Separate facts from opinions.** Clearly distinguish between what is verifiably true and what is assumed.\n- **Embrace constraints, reject conventions.** Physical laws are constraints. Industry norms are conventions. Only constraints are immovable.\n- **Show your reasoning.** Every conclusion should trace back to a fundamental principle through a clear logical chain.\n- **Be honest about uncertainty.** Flag where your analysis depends on assumptions that need validation.\n\nDescribe the problem, decision, or domain you want to analyze from first principles:\n\n[DESCRIBE YOUR PROBLEM OR CHALLENGE]`,
         tags: ["reasoning", "first-principles", "problem-solving", "strategy"]
@@ -1274,7 +1274,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "unified-design-system",
         title: "Unified Design System",
-        category: "Coding",
+        category: "Coding & Tech",
         popular: true,
         description: "Audits existing styling and refactors it into a cohesive design system with semantic tokens, utility classes, canonical components, and enforced template reuse.",
         prompt: `# Unified Design System\n\nPlease audit and refactor my existing styling into a cohesive design system.\n\n## Context\n\n- Respect existing visual language unless explicitly improving consistency.\n- Prefer existing tokens/utilities/components over creating new one-off patterns.\n- If a new pattern is needed, add it to the shared system first, then consume it.\n\n## Phase 1: Token Foundation\n\n- Audit current styling approach (Tailwind / vanilla CSS / CSS-in-JS).\n- Inventory existing tokens and style sources.\n- Normalize into semantic tokens:\n  - Colors (including tint/subtle variants)\n  - Spacing scale\n  - Typography scale\n  - Radius, shadows, z-index, transitions\n- Reference existing design files/style guides and preserve compatibility.\n\n## Phase 2: Utility Layer\n\n- Build/standardize utility classes for:\n  - Layout: flex, grid, gap, alignment, sizing\n  - Spacing: margin/padding scales\n  - Typography: size, weight, color, alignment\n  - Visual helpers: rounded, shadow, border, background, display\n- Remove duplicate/overlapping utilities.\n\n## Phase 3: Component Library\n\n- Define canonical reusable components for common UI patterns:\n  - Buttons (all variants/states)\n  - Badges\n  - Alerts\n  - Forms/inputs\n  - Tables\n  - Cards\n  - Modals\n  - Section headers\n- Match current product style and interaction behavior.\n\n## Template Enforcement (Mandatory)\n\n- For every use case, map existing UI to canonical components before editing.\n- Reuse canonical templates for matching use cases; do not create ad-hoc local structures/classes.\n- If two areas solve the same UI problem, they must share the same template and density rules.\n- Any exception must be explicitly listed with justification.\n\n## Phase 4: Page Refactoring\n\n- Replace inline styles with tokens/utilities/component classes.\n- Keep inline style only for true runtime-dynamic values.\n- Preserve behavior and existing UX flows.\n\n## Required Deliverables\n\n- Design System Audit Summary (what exists, what changed, what was removed).\n- Token Dictionary (final names and meaning).\n- Component Mapping Report (old pattern -> canonical component).\n- Template Coverage Report (files updated + justified exceptions).\n- Before/after notes for visual consistency improvements.\n\n## Acceptance Criteria\n\n- Consistent spacing rhythm, typography, component density, and state styling across pages.\n- Same use case = same template.\n- Minimal cognitive load and minimal style duplication.\n- No functional regressions.`,
@@ -1283,7 +1283,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "standard-code-generation",
         title: "Standard Code Generation Template",
-        category: "Coding",
+        category: "Coding & Tech",
         popular: true,
         description: "Generates robust, production-ready code with error handling, edge cases, and best practices — perfect for implementing entire features.",
         prompt: `# Standard Code Generation Template\n\nI need to implement [specific functionality] in [programming language].\n\nKey requirements:\n1. [Requirement 1]\n2. [Requirement 2]\n3. [Requirement 3]\n\nPlease consider:\n- Error handling\n- Edge cases\n- Performance optimization\n- Best practices for [language/framework]\n\nPlease do not unnecessarily remove any comments or code.\nGenerate the code with clear comments explaining the logic.`,
@@ -1292,7 +1292,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "dev-mode-system-prompt",
         title: "Dev Mode System Prompt",
-        category: "Coding",
+        category: "Coding & Tech",
         popular: true,
         description: "Sets up minimal-chatter, step-by-step coding assistance that breaks large tasks into small blocks — ideal for heavy programming sessions.",
         prompt: `# Dev Mode System Prompt\n\nYou are helping me with heavy programming. Follow these rules:\n\n- Minimal chatter, no long explanations.\n- For each step, give me only a 1–2 sentence explanation outside the code.\n- Code must be broken into small, skinny blocks (no giant walls).\n- End each code block with a marker outside the block to show the render is complete.\n- Keep all chatter strictly outside code blocks.\n- Stay consistent across the session.`,
@@ -1301,7 +1301,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "comprehensive-code-review",
         title: "Comprehensive Code Review",
-        category: "Coding",
+        category: "Coding & Tech",
         description: "Performs an in-depth code review covering quality, bugs, performance, security, and maintainability — with a 1–10 rating and refactored output.",
         prompt: `# Comprehensive Code Review\n\nReview the following code for best practices, performance, security, and maintainability:\n\n[paste code]\n\n1. Identify issues\n2. Suggest improvements\n3. Provide refactored code\n4. Explain changes\n5. Potential edge cases\n6. Rating (1-10) with justification`,
         tags: ["coding", "review", "security", "refactoring"]
@@ -1309,7 +1309,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "api-endpoint-generator",
         title: "API Endpoint Generator",
-        category: "Coding",
+        category: "Coding & Tech",
         description: "Generates complete API endpoints with authentication, validation, pagination, error handling, and unit tests for any framework and database.",
         prompt: `# API Endpoint Generator\n\nWrite a/an [framework] API for [functionality]. It should make use of [database].\n\nInclude:\n- Endpoints with auth and validation\n- Pagination and error handling\n- Unit tests`,
         tags: ["coding", "api", "backend", "testing"]
@@ -1317,7 +1317,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "crud-operations-generator",
         title: "CRUD Operations Generator",
-        category: "Coding",
+        category: "Coding & Tech",
         description: "Creates full CRUD setups including models, controllers, routes, validation, and error handling — saves hours on backend scaffolding.",
         prompt: `# CRUD Operations Generator\n\nGenerate the full CRUD logic for managing a [resource] in [framework].\n\nInclude model definition, controller methods, and route setup.\nAdd validation, error handling, and example queries.`,
         tags: ["coding", "crud", "backend", "scaffolding"]
@@ -1325,7 +1325,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "checklist-mode",
         title: "Checklist Mode",
-        category: "Coding",
+        category: "Coding & Tech",
         description: "Guides complex coding projects with numbered checklists before any code — keeps large-scale development structured and incremental.",
         prompt: `# Checklist Mode\n\nYou are helping me with coding. Follow these rules:\n\n- Always output the next step as a numbered checklist before showing any code.\n- Keep explanations to one short sentence per checklist item.\n- Only after the checklist, show the minimal code needed for that step.\n- End each code block with a marker outside the block.`,
         tags: ["coding", "workflow", "structured", "planning"]
@@ -1333,7 +1333,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "performance-optimization",
         title: "Performance Optimization",
-        category: "Coding",
+        category: "Coding & Tech",
         description: "Analyzes and optimizes code end-to-end with algorithm improvements, data structure changes, caching strategies, and before/after benchmarks.",
         prompt: `# Performance Optimization\n\nSuggest performance optimizations for this code:\n\n[paste code]\n\nInclude:\n- Algorithm improvements\n- Data structure changes\n- Caching strategies\n- Query optimizations\n- Before/after benchmarks`,
         tags: ["coding", "performance", "optimization", "algorithms"]
@@ -1341,7 +1341,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "system-design-architecture",
         title: "System Design & Architecture",
-        category: "Coding",
+        category: "Coding & Tech",
         description: "Designs entire systems with services, communication patterns, monitoring, and trade-off analysis — ideal for architecting scalable applications.",
         prompt: `# System Design & Architecture\n\nYou are an expert at system design and architecture. Tell me how to design a [system]. The technology stack is [comma-separated list of technologies].\n\nInclude:\n- Services and their responsibilities\n- Communication patterns between services\n- Monitoring and observability strategy\n- Contrasts with alternative approaches and trade-offs`,
         tags: ["coding", "architecture", "system-design", "scalability"]
@@ -1349,7 +1349,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "unit-test-suite-generator",
         title: "Unit Test Suite Generator",
-        category: "Coding",
+        category: "Coding & Tech",
         description: "Creates comprehensive test suites with coverage for normal, edge, and invalid inputs — including mocks, assertions, and setup/teardown.",
         prompt: `# Unit Test Suite Generator\n\nGenerate unit tests for the following [library/framework] component:\n\n[paste code]\n\nUsing [testing framework].\n\nInclude:\n- Coverage for normal, edge, and invalid inputs\n- Mocks and assertions\n- Setup and teardown where needed`,
         tags: ["coding", "testing", "unit-tests", "quality"]
@@ -1357,7 +1357,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "vibe-coder-refactoring",
         title: "Vibe Coder for Refactoring",
-        category: "Coding",
+        category: "Coding & Tech",
         description: "Adds features or fixes to existing code while preserving everything else — highlights exactly what changed with comments and full code output.",
         prompt: `# Vibe Coder for Refactoring\n\nLook at the below code.\n\n[paste the full code]\n\nThis code is doing something. [describe current function]\n\nI want to make it do something extra. [describe change]\n\nPlease add the necessary changes and add comments to highlight exactly where you made the change. Don't touch any other part of the code.\n\nGive me the full code with your changes added. Give me a short explanation of the changes you made.`,
         tags: ["coding", "refactoring", "iterative", "feature-addition"]
@@ -1378,16 +1378,13 @@ If the company is Chinese-listed or a Chinese ADR:
 
     // Fixed category order — all 10 always shown
     const ALL_CATEGORIES = [
-      "Coding",
-      "Writing & Editing",
-      "Content Creation",
-      "Research & Analysis",
-      "Reasoning & Frameworks",
-      "Extraction & Summarization",
-      "Data & Automation",
-      "System Prompts & Meta",
-      "Learning",
-      "Productivity & Business"
+      "Writing & Content",
+      "Coding & Tech",
+      "Business & Finance",
+      "Creative",
+      "Learning & Research",
+      "Productivity",
+      "Prompt Engineering"
     ];
 
     function getCategories() {
