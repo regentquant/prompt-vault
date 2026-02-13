@@ -332,11 +332,14 @@
 
     .prompt-tag {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.68rem;
+      font-size: 0.62rem;
       background: var(--tag-bg);
       color: var(--text-secondary);
-      padding: 3px 8px;
+      padding: 2px 9px;
+      border-radius: 999px;
       white-space: nowrap;
+      display: inline-block;
+      margin-top: 4px;
     }
 
     .popular-icon {
@@ -1394,9 +1397,9 @@ If the company is Chinese-listed or a Chinese ADR:
                 <div class="prompt-left">
                   <div class="prompt-title">${esc(p.title)}${p.popular ? '<img class="popular-icon" src="assets/popular.svg" alt="Popular">' : ''}</div>
                   <div class="prompt-desc">${esc(p.description)}</div>
+                  <span class="prompt-tag">${esc(p.category)}</span>
                 </div>
                 <div class="prompt-right">
-                  <span class="prompt-tag">${esc(p.category)}</span>
                   <button class="action-btn" onclick="copyPrompt(event, '${p.id}')" title="Copy">${copyIcon}</button>
                   <button class="action-btn" onclick="downloadPrompt(event, '${p.id}')" title="Download">${downloadIcon}</button>
                 </div>
