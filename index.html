@@ -362,6 +362,15 @@
       text-align: right;
     }
 
+    /* ---- Sticky header when expanded ---- */
+    .prompt-row.expanded .prompt-summary {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
     /* ---- Expanded prompt ---- */
     .prompt-body {
       display: none;
@@ -1347,7 +1356,9 @@ If the company is Chinese-listed or a Chinese ADR:
     // Toggle expand/collapse
     function togglePrompt(id) {
       const body = document.getElementById('body-' + id);
+      const row = body?.closest('.prompt-row');
       if (body) body.classList.toggle('open');
+      if (row) row.classList.toggle('expanded');
     }
 
     // Copy prompt
