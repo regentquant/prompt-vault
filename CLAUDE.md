@@ -23,6 +23,15 @@ No build or install commands. Open `index.html` in a browser to develop locally.
 
 GitHub Pages via `.github/workflows/deploy.yml` — auto-deploys the repo root on push to `main`.
 
+## Adding New Prompts
+
+When adding a new prompt to the `PROMPTS` array, always check and adjust:
+
+1. **Category**: Pick the best existing category. If none fits, create a new one — categories are derived automatically from the data.
+2. **Title**: Clean, concise title. Remove version numbers, "PROMPT" suffixes, or ALL-CAPS formatting.
+3. **Description**: One sentence summarizing what the prompt does and why it's useful.
+4. **Content**: The `prompt` field must always start with `# Title` as the first line of the markdown. Clean up any formatting artifacts from the source file.
+
 # AUTO Plan & Code
 
 1. Before writing or editing any code, first output a detailed step-by-step plan (files to modify, specific changes, rationale)

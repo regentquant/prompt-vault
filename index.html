@@ -715,6 +715,504 @@ When generating frontend UI code, **never** fall into these patterns. They are t
         description: "Rewrites any text to sound authentically human — varied sentence structure, natural imperfections, and emotional voice that bypasses AI detection.",
         prompt: `# Write Like a Human\n\nYou are an expert human writer and editor with 20+ years of experience. Your task is to completely rewrite the following text to sound authentically human — natural, unpredictable, and full of personality. Follow these critical instructions:\n\n**PERPLEXITY & PREDICTABILITY CONTROL:**\n- Deliberately choose unexpected, creative word alternatives instead of obvious ones\n- Use varied vocabulary - avoid repetitive word patterns that AI typically generates\n- Include some colloquialisms, idioms, and region-specific expressions\n- Add subtle imperfections that humans naturally make (minor redundancies, natural speech patterns)\n\n**BURSTINESS & SENTENCE VARIATION:**\n- Create dramatic sentence length variation: mix very short sentences (3-5 words) with longer, complex ones (25+ words)\n- Alternate between simple, compound, complex, and compound-complex sentence structures\n- Start sentences with different elements: adverbs, prepositional phrases, dependent clauses, questions\n- Include intentional sentence fragments and run-on sentences where natural\n- Use parenthetical asides and em-dashes for authentic human flow\n\n**EMOTIONAL INTELLIGENCE & HUMAN TOUCH:**\n- Infuse genuine emotional undertones appropriate to the content\n- Add personal opinions, hesitations, or qualifiers ("I believe," "perhaps," "it seems")\n- Include conversational elements and rhetorical questions\n- Use contractions naturally and vary formal/informal tone within the text\n- Add subtle humor, sarcasm, or personality where appropriate\n\n**STRUCTURAL PATTERN DISRUPTION:**\n- Avoid typical introduction → body → conclusion structure\n- Start with unexpected angles or mid-thought observations\n- Include tangential thoughts and natural digressions\n- Use irregular paragraph lengths (some very short, others longer)\n- Break conventional grammar rules occasionally in natural ways\n\n**CONTEXTUAL AUTHENTICITY:**\n- Reference current events, popular culture, or common experiences\n- Include specific, concrete details rather than generic statements\n- Use metaphors and analogies that feel personally chosen\n- Add transitional phrases that feel conversational rather than mechanical\n\n**DETECTION-SPECIFIC COUNTERS:**\n- Use irregular sentence structures and avoid formulaic transitions\n- Counter syntax analysis by including natural human imperfections and conversational quirks\n- Counter emotional tone analysis by adding authentic personal voice and varied emotional expression\n\n**FINAL REQUIREMENTS:**\n- Maintain the original meaning and key information\n- Ensure the rewrite sounds like it came from a real person with authentic voice\n- Make it feel like natural human communication, not polished AI output\n- Include at least 2-3 instances of slightly imperfect but natural phrasing\n- Aim for high perplexity (unpredictable word choices) and high burstiness (varied sentence structures)`,
         tags: ["writing", "rewriting", "humanize", "voice"]
+      },
+      {
+        id: "universal-equity-research",
+        title: "Universal Equity Research",
+        category: "Finance & Research",
+        description: "Institutional-quality equity research report generator — auto-detects sector, applies relevant frameworks (DCF, comps, 7 Powers, DuPont, ROIC), and covers financials, moat, management, valuation, risks, and catalysts.",
+        prompt: `# Universal Equity Research
+
+> **Usage**: \`Analyze: [Company Name] ([Ticker])\`
+
+---
+
+## EXECUTION PROTOCOL
+
+You are a senior equity research analyst producing an institutional-quality equity research report. Before writing anything, execute these steps silently:
+
+### Step 0: Data Acquisition
+**Use web search aggressively.** For every section, search for current data before writing. At minimum, search for:
+1. "[Company] latest annual report key financials [year]"
+2. "[Company] investor presentation [year]"
+3. "[Company] [ticker] stock price market cap"
+4. "[Company] industry competitors market share"
+5. "[Company] analyst consensus estimates"
+6. "[Company] recent news catalysts [last 6 months]"
+7. "[Company] management insider ownership"
+8. "[Company] ESG rating controversies"
+
+If the user has pasted financial data or an annual report alongside this prompt, treat that as the primary source and use web search to supplement with current stock price, peer data, and recent developments.
+
+**Data sourcing hierarchy:**
+1. User-provided documents (annual reports, filings) — highest priority
+2. Web search results (current financials, stock data, news)
+3. Your training knowledge — lowest priority, flag as approximate with "[est.]"
+
+**If a specific data point is unavailable after searching**, write "[Data not found — verify from company filings]" rather than fabricating numbers. Never invent financial figures.
+
+### Step 1: Auto-Detection
+Before writing the report, silently determine:
+- **Sector**: Which industry module(s) to activate (see Section 5)
+- **Market**: Where the company is listed (determines accounting standard, currency, governance norms)
+- **Accounting standard**: US GAAP / IFRS / local standard (e.g., CAS for China)
+- **Stock classification** (Peter Lynch): Slow Grower / Stalwart / Fast Grower / Cyclical / Turnaround / Asset Play
+- **Life stage**: Pre-revenue / High-growth / Mature / Declining / Distressed
+- **Conglomerate check**: If multi-segment, identify which sector modules apply to which segments
+
+### Step 2: Depth Allocation
+Distribute analytical depth based on what matters most for this stock type:
+
+| Stock Type | Spend MORE depth on | Spend LESS depth on |
+|---|---|---|
+| Fast Grower | TAM/growth runway, unit economics, competitive moat, reverse DCF | Historical financials, dividend analysis |
+| Stalwart | Moat durability, capital allocation, earnings quality, relative valuation | Growth analysis, TAM sizing |
+| Cyclical | Cycle positioning (Marks framework), normalized earnings, balance sheet stress test | Steady-state DCF, ESG |
+| Turnaround | Catalyst identification, downside protection, liquidity analysis, management change | Historical ROIC trends, peer premium/discount |
+| Asset Play | NAV/SOTP valuation, hidden assets, catalyst to unlock value | Growth forecasting, industry analysis |
+| Pre-revenue | Pipeline/product assessment, cash runway, TAM, management/team quality | Traditional financial ratios, earnings quality |
+| Distressed | Liquidation value, debt waterfall, covenant analysis, restructuring scenarios | Growth projections, moat analysis |
+
+### Step 3: Write the Report
+Follow Sections 1–10 below. Use tables for all financial data. State assumptions explicitly. Distinguish facts from judgment. Maintain epistemic honesty — flag uncertainty rather than projecting false confidence.
+
+---
+
+## SECTION 1: EXECUTIVE SUMMARY & INVESTMENT RECOMMENDATION
+
+*[This is the one-page summary. Everything a portfolio manager needs to make a go/no-go decision.]*
+
+Provide:
+- **Investment rating**: Buy / Hold / Sell — with conviction level (High / Medium / Low)
+- **Price target** with primary methodology and 12-month time horizon
+- **Current price** vs. target → upside/downside %
+- **Key stock data table**: Market cap, enterprise value, 52-week range, dividend yield, avg daily volume, short interest (if available), shares outstanding
+- **Financial snapshot table**:
+
+| Metric | FY-2 (A) | FY-1 (A) | FY0 (A/E) | FY+1 (E) | FY+2 (E) |
+|---|---|---|---|---|---|
+| Revenue | | | | | |
+| Revenue Growth % | | | | | |
+| EBITDA | | | | | |
+| EBITDA Margin % | | | | | |
+| Net Income | | | | | |
+| Diluted EPS | | | | | |
+| FCF | | | | | |
+| P/E | | | | | |
+| EV/EBITDA | | | | | |
+| FCF Yield % | | | | | |
+| ROIC % | | | | | |
+
+*(A = Actual, E = Estimate. Use consensus estimates where available; flag if using own estimates.)*
+
+- **Investment thesis** in 3 paragraphs: (1) Core thesis and recommendation, (2) Key catalysts with timeline, (3) Primary risks and what's priced in
+- **Lynch classification** with one-line rationale
+
+---
+
+## SECTION 2: BUSINESS MODEL & COMPETITIVE POSITION
+
+### 2A. Business Model
+- What the company does — explain so a smart non-expert understands
+- Revenue decomposition: by segment, geography, product/service, recurring vs. non-recurring
+- Revenue model mechanics: volume × price; subscription / transactional / licensing / hybrid
+- Cost structure: fixed vs. variable split, key cost drivers, operating leverage profile
+- Unit economics where applicable (per customer, per unit, per transaction)
+- Key dependencies: customer concentration (top 5 customers as % of revenue), supplier concentration, platform/channel dependency
+
+### 2B. Competitive Moat Assessment
+Apply **Hamilton Helmer's 7 Powers** — identify which the company possesses and provide evidence:
+
+| Power | Present? | Evidence | Durability |
+|---|---|---|---|
+| Scale Economies | | | |
+| Network Effects | | | |
+| Counter-Positioning | | | |
+| Switching Costs | | | |
+| Branding / Pricing Power | | | |
+| Cornered Resource | | | |
+| Process Power | | | |
+
+- **Moat trajectory**: Widening / Stable / Narrowing / None
+- **Competitive advantage period** (Mauboussin framework): estimated years of above-WACC returns remaining, with reasoning
+
+### 2C. Porter's Five Forces
+For the company's primary industry — rate each force (Strong / Moderate / Weak) and explain:
+- Threat of new entrants (barriers to entry)
+- Bargaining power of buyers
+- Bargaining power of suppliers
+- Threat of substitutes
+- Competitive rivalry intensity
+- **Overall industry attractiveness**: Attractive / Neutral / Unattractive
+
+### 2D. Industry Context
+- Industry lifecycle stage: Emerging / Growth / Mature / Decline
+- Market structure: fragmented or consolidated? Market share of top 3–5 players
+- TAM / SAM / SOM with growth rates and methodology
+- Key secular trends (tailwinds and headwinds)
+- Regulatory environment and upcoming changes
+
+---
+
+## SECTION 3: MANAGEMENT QUALITY & CORPORATE GOVERNANCE
+
+Answer with specific evidence, not generic praise:
+
+**Leadership**
+- CEO and key executives: background, tenure, track record at this and prior companies
+- Insider ownership: exact percentage if findable, or qualitative assessment
+- Compensation: aligned with long-term value (ROIC, FCF) or short-term metrics (revenue, EPS)?
+
+**Capital Allocation Track Record**
+- Organic reinvestment: R&D and CapEx productivity — are they earning above cost of capital on incremental investment?
+- M&A: history of acquisitions — value created or destroyed? Overpayment pattern?
+- Buybacks: bought below intrinsic value or at peaks?
+- Dividends: sustainable payout? Growing?
+- Score capital allocation: Excellent / Good / Fair / Poor
+
+**Governance & Integrity**
+- Does management communicate honestly when things go wrong? (Fisher's Point #14)
+- Succession planning and key-person risk
+- Board independence and relevant expertise
+- Related-party transactions or self-dealing red flags
+- For emerging markets: ownership concentration, minority shareholder protections, VIE structures (China), audit quality
+
+**Overall Management Rating**: A / B / C / D with one-line justification
+
+---
+
+## SECTION 4: FINANCIAL ANALYSIS
+
+### 4A. Historical Performance (5 years, or since IPO if shorter)
+
+**Income Statement Summary Table:**
+
+| | FY-4 | FY-3 | FY-2 | FY-1 | FY0 |
+|---|---|---|---|---|---|
+| Revenue | | | | | |
+| YoY Growth % | | | | | |
+| Gross Profit | | | | | |
+| Gross Margin % | | | | | |
+| EBITDA | | | | | |
+| EBITDA Margin % | | | | | |
+| Operating Income | | | | | |
+| Operating Margin % | | | | | |
+| Net Income | | | | | |
+| Diluted EPS | | | | | |
+
+**Balance Sheet Snapshot:**
+
+| | FY-4 | FY-3 | FY-2 | FY-1 | FY0 |
+|---|---|---|---|---|---|
+| Cash & Equivalents | | | | | |
+| Total Debt | | | | | |
+| Net Debt | | | | | |
+| Shareholders' Equity | | | | | |
+| Net Debt / EBITDA | | | | | |
+| Debt / Equity | | | | | |
+| Current Ratio | | | | | |
+| Interest Coverage | | | | | |
+
+**Cash Flow Summary:**
+
+| | FY-4 | FY-3 | FY-2 | FY-1 | FY0 |
+|---|---|---|---|---|---|
+| Operating Cash Flow | | | | | |
+| CapEx | | | | | |
+| Free Cash Flow | | | | | |
+| FCF Margin % | | | | | |
+| CFO / Net Income | | | | | |
+| Dividends Paid | | | | | |
+| Buybacks | | | | | |
+
+### 4B. DuPont Decomposition
+Break down ROE into 5 components and identify which is driving changes:
+ROE = Tax Burden × Interest Burden × Operating Margin × Asset Turnover × Equity Multiplier
+
+### 4C. ROIC Analysis (McKinsey Framework)
+- ROIC = NOPAT / Invested Capital — calculate for 5 years
+- ROIC vs. WACC spread — creating or destroying value?
+- Decompose into NOPAT margin × invested capital turnover
+- EVA = Invested Capital × (ROIC − WACC)
+- Trend: improving, stable, or deteriorating?
+
+### 4D. Earnings Quality Assessment
+Run these checks and flag any concerns:
+
+| Check | Status | Notes |
+|---|---|---|
+| CFO / Net Income consistently > 1.0? | | |
+| Accruals ratio trend | | |
+| AR growing faster than revenue? | | |
+| Inventory growing faster than COGS? | | |
+| Frequent "nonrecurring" charges? | | |
+| Auditor changes or qualified opinions? | | |
+| Revenue recognition policy aggressive? | | |
+| CapEx vs. depreciation ratio | | |
+| Cash conversion cycle trend | | |
+
+**Overall Earnings Quality**: High / Moderate / Low / Red Flag
+
+### 4E. Growth Decomposition
+- Organic: volume + price + mix
+- Inorganic: acquisitions
+- Currency effects
+- Sustainable growth rate: ROE × retention ratio
+- Is growth value-creating (ROIC > WACC) or value-destroying?
+
+---
+
+## SECTION 5: INDUSTRY-SPECIFIC METRICS
+
+**Auto-activate the correct module(s) based on the company's sector.** For conglomerates, apply relevant modules to each segment. Analyze ALL metrics in the activated module with historical trends.
+
+**SaaS / Software**: ARR, NRR (world-class ≥115%), GRR, CAC payback (<18mo), LTV/CAC (≥3:1), Rule of 40 (growth% + margin% ≥40%), magic number, burn multiple, gross margin (≥70% = scalable), logo retention, cohort analysis
+
+**Banks / Financial Services**: NIM, CET1 ratio, NPL ratio, ROTCE, efficiency ratio (<55% excellent), provision coverage, P/TBV, loan growth, fee income mix, cost of risk, loan-to-deposit ratio
+
+**Insurance**: Combined ratio (<100% = underwriting profit), loss ratio, expense ratio, float size, investment yield, reserve development, premium growth, P/B vs. ROE
+
+**REITs**: FFO, AFFO, P/FFO, NAV discount/premium, cap rate vs. cost of capital, occupancy, same-store NOI growth, lease expiry schedule, FFO payout ratio
+
+**Oil & Gas**: Reserve replacement ratio (>100%), reserve life index, F&D costs, netback, realized prices, recycle ratio (>1.0), decline rate, breakeven price
+
+**Pharma / Biotech**: Pipeline by phase with probability-weighted rNPV, patent cliff (% revenue losing exclusivity within 5 years), R&D productivity, peak sales estimates, regulatory milestones
+
+**Retail / Consumer**: SSS growth, inventory turnover, sell-through rate, sales/sq ft, e-commerce penetration, average transaction value, store count trajectory
+
+**Industrials / Manufacturing**: Book-to-bill (>1.0 = growing demand), capacity utilization, order backlog, aftermarket revenue %, OEE, margin bridge analysis
+
+**Telecom**: ARPU trend, churn rate, subscriber growth, CapEx/revenue, data revenue mix, spectrum holdings
+
+**Mining / Metals**: AISC vs. commodity price, reserve life, reserve replacement, metallurgical recovery, cut-off grade, resource-to-reserve conversion
+
+**Utilities**: Rate base growth, allowed vs. earned ROE, FFO/debt, regulatory framework quality, payout ratio (60–80% typical), renewable mix trajectory
+
+**Airlines**: RASM, CASM-ex-fuel, load factor, yield, EBITDAR margin, fleet age, route network strength
+
+**Media / Entertainment**: Subscriber growth, ARPU, churn, content spend ROI, engagement metrics, ad revenue per user
+
+**E-commerce / Marketplace**: GMV, take rate, unit economics, CAC, AOV, repeat purchase rate, contribution margin per order, fulfillment cost per order
+
+**Semiconductors**: Design win pipeline, fab utilization, ASP trends, inventory-to-billings ratio, R&D as % of revenue, customer concentration, technology node leadership
+
+**Real Estate Development** (non-REIT): Contracted but unrecognized sales, land bank, sell-through rate, gross margin by project, net gearing
+
+---
+
+## SECTION 6: VALUATION
+
+Use **at least three methods**. Prioritize the methods most appropriate for this company type.
+
+### 6A. Discounted Cash Flow (DCF)
+- 5-year FCFF projections with explicit assumptions table:
+
+| Assumption | FY+1 | FY+2 | FY+3 | FY+4 | FY+5 | Rationale |
+|---|---|---|---|---|---|---|
+| Revenue growth % | | | | | | |
+| EBITDA margin % | | | | | | |
+| CapEx / Revenue % | | | | | | |
+| ∆ Working Capital | | | | | | |
+| Tax rate % | | | | | | |
+
+- WACC calculation: Cost of equity (CAPM: Rf + β × ERP + country risk premium if applicable), cost of debt, capital structure weights
+- Terminal value via BOTH Gordon Growth (2–3% terminal growth) AND exit multiple
+- **Sensitivity table**: Implied share price across WACC (±1%) × terminal growth rate (or exit multiple) grid
+- Enterprise Value → Equity Value bridge (subtract net debt, minorities, preferred; add associates, excess cash)
+
+### 6B. Relative Valuation
+- Select 5–8 peers with clear rationale for inclusion
+
+| Peer | P/E (Fwd) | EV/EBITDA | EV/Revenue | P/FCF | PEG | Growth % | ROIC % |
+|---|---|---|---|---|---|---|---|
+| Peer 1 | | | | | | | |
+| ... | | | | | | | |
+| **Mean** | | | | | | | |
+| **Median** | | | | | | | |
+| **[Company]** | | | | | | | |
+
+- Does the company deserve a premium or discount to peers? Why?
+- Implied price at mean/median peer multiples
+
+### 6C. Reverse DCF / Expectations Analysis (Mauboussin)
+- What growth rate, margin, and ROIC does the current stock price imply?
+- Is the implied growth achievable vs. TAM, competitive position, historical track record?
+- Verdict: Priced for perfection / Priced fairly / Embedding pessimism
+
+### 6D. Additional Methods (apply where appropriate)
+- **Sum-of-the-Parts**: For conglomerates — value each segment separately, sum, subtract holdco discount
+- **Dividend Discount Model**: For stable high-yield stocks (REITs, utilities, mature banks)
+- **NAV-based**: For asset-heavy companies (real estate, mining, O&G)
+- **Probability-weighted rNPV**: For pharma/biotech pipelines
+- **Liquidation / Asset value**: For distressed or asset plays
+- **Replacement cost**: What would it cost to build this business from scratch?
+
+### 6E. Valuation Summary
+**Football field chart** (text-based):
+
+Method          |  Bear  |  Base  |  Bull
+DCF             |  $XX   |  $XX   |  $XX
+Comps (median)  |  $XX   |  $XX   |  $XX
+Reverse DCF     |  Implied growth: X% (vs. achievable Y%)
+[Other method]  |  $XX   |  $XX   |  $XX
+Weighted Target |        |  $XX   |
+Current Price   |        |  $XX   |
+Upside/Downside |        |  XX%   |
+
+Probability-weighted target: Bull (25%) / Base (50%) / Bear (25%)
+
+---
+
+## SECTION 7: VARIANT PERCEPTION & CATALYSTS
+
+### 7A. Variant Perception
+This is the most important section for buy-side decision-making. Answer concretely:
+- What is the **consensus view** on this company? (Summarize what sell-side and the market believe)
+- Where **specifically** does your analysis differ?
+- What **evidence** supports the divergent view?
+- What is the **market missing or mispricing**, and why?
+
+### 7B. Catalyst Map
+
+| Catalyst | Timeline | Probability | EPS / Valuation Impact | Type |
+|---|---|---|---|---|
+| | 0–6 months | H/M/L | | Earnings / Product / Regulatory / M&A / Capital Return |
+| | 6–18 months | H/M/L | | |
+| | 18+ months | H/M/L | | |
+
+For the top 2–3 catalysts, quantify the potential impact on EPS or target price.
+
+### 7C. Negative Catalysts / De-risking Events
+What events could cause the stock to de-rate? What's the timeline?
+
+---
+
+## SECTION 8: RISK ANALYSIS
+
+### 8A. Munger's Inversion
+*"What would guarantee permanent loss of capital here?"* List the 3–5 most dangerous scenarios.
+
+### 8B. Risk Matrix
+
+| Risk | Category | Probability | Impact | Mitigation / Monitoring |
+|---|---|---|---|---|
+| | Operational | H/M/L | H/M/L | |
+| | Financial | H/M/L | H/M/L | |
+| | Competitive | H/M/L | H/M/L | |
+| | Regulatory | H/M/L | H/M/L | |
+| | Macro | H/M/L | H/M/L | |
+| | ESG | H/M/L | H/M/L | |
+
+Pay special attention to:
+- **Leverage** (Pabrai's #1 concern): Can the company survive a severe downturn with current debt levels?
+- **Customer/supplier concentration**: What happens if the top customer leaves?
+- **Technology disruption**: Is the moat vulnerable to paradigm shifts?
+- **Key-person risk**: What happens if the CEO leaves tomorrow?
+
+### 8C. Howard Marks' Cycle Assessment
+- Where are we in the cycle for this company's sector?
+- Is current valuation reflecting euphoria, fair value, or pessimism?
+- What is the asymmetry of risk/reward at the current price?
+- Are other investors being greedy or fearful about this name?
+
+### 8D. Balance Sheet Stress Test
+Under a severe scenario (revenue -30%, margins compressed, credit tightens):
+- Does the company breach any debt covenants?
+- How many months/quarters of cash runway remain?
+- What assets could be liquidated?
+- Would dilutive equity issuance be necessary?
+
+### 8E. Pre-Mortem
+*Imagine it's 2 years from now and this investment has lost 50% of its value. What went wrong?*
+List the 3 most likely causes, ranked by probability.
+
+---
+
+## SECTION 9: ESG ASSESSMENT
+
+Using the SASB/ISSB materiality framework for this company's specific industry:
+- Identify the **2–3 most MATERIAL ESG factors** (not a generic laundry list)
+- For each material factor: current performance, trajectory, and investment relevance
+- **Environmental**: Emissions profile, climate transition risk, physical climate risk, resource intensity
+- **Social**: Workforce management, supply chain practices, data privacy, product safety, community impact
+- **Governance**: Board quality, compensation alignment, audit quality, shareholder rights
+- **Bottom line**: Do ESG factors represent a material investment risk, opportunity, or neither?
+
+---
+
+## SECTION 10: INVESTMENT CONCLUSION
+
+### 10A. The Thesis in One Paragraph
+State it as Buffett would: *"I am buying/avoiding [COMPANY] because..."*
+
+### 10B. Scenario Table
+
+| Scenario | Probability | Key Assumptions | Target Price | Return from Current |
+|---|---|---|---|---|
+| Bull | 25% | | $ | % |
+| Base | 50% | | $ | % |
+| Bear | 25% | | $ | % |
+| **Probability-Weighted** | | | **$** | **%** |
+
+### 10C. Key Monitoring Metrics
+The 5 metrics to track quarterly that confirm or invalidate the thesis:
+1.
+2.
+3.
+4.
+5.
+
+### 10D. Decision Rules (Pre-committed)
+- **Upgrade to Buy if**: [specific, measurable condition]
+- **Downgrade to Sell if**: [specific, measurable condition]
+- **Exit entirely if**: [specific, measurable condition]
+
+### 10E. Opportunity Cost Check (Munger)
+Is this the best risk-adjusted use of capital versus alternatives? How does this expected return compare to simply holding the index or the next-best idea?
+
+---
+
+## CROSS-MARKET ADJUSTMENT PROTOCOL
+
+*Applied automatically when the company is not US-listed under US GAAP.*
+
+### Accounting Normalization
+- Flag which standard (IFRS / US GAAP / CAS / other) and note material differences
+- IFRS capitalizes development costs (US GAAP expenses all R&D) — normalize for comparability
+- IFRS 16 vs. ASC 842 lease treatment — adjust EBITDA if comparing cross-standard peers
+- LIFO permitted under US GAAP, prohibited under IFRS — flag inventory/COGS distortions
+- Always calculate ROIC and FCF (economic measures) for cross-standard comparability
+
+### Emerging Market Risk Module
+If applicable, explicitly address:
+- **Currency risk**: Regime type, historical volatility, natural hedging, repatriation restrictions
+- **Political/regulatory risk**: Stability, expropriation precedent, capital controls, sovereign credit rating
+- **Governance risk**: Ownership structure, related-party transactions, minority protections, VIE structures (China), audit quality concerns
+- **Liquidity risk**: Free float, daily trading volume, market depth, index inclusion
+- **Country risk premium**: Add explicit premium to WACC (quantify in bps)
+
+### China-Specific Considerations
+If the company is Chinese-listed or a Chinese ADR:
+- VIE structure assessment (for offshore listings)
+- SOE vs. private ownership implications
+- Common prosperity / regulatory intervention risk
+- CAS-to-IFRS reconciliation issues
+- Capital allocation constraints (dividend repatriation, forex controls)
+- Related-party transaction prevalence
+
+---
+
+## OUTPUT FORMAT REQUIREMENTS
+
+- Use **tables** for all financial data, comparables, scenario analysis, and risk matrices
+- **Bold** key figures and critical conclusions
+- Every forecast number traces to an explicit, stated assumption
+- Clearly distinguish: FACT (from filings/data) vs. ESTIMATE (from consensus) vs. JUDGMENT (your analysis)
+- Flag data vintage: "[FY2024A]" for actuals, "[FY2025E - consensus]" for estimates, "[est. - training data, verify]" for unverified figures
+- State uncertainty ranges rather than false precision
+- Use the company's reporting currency throughout; note USD equivalent for key figures if non-USD
+- Include a **disclaimer** at the end: "This report is AI-generated for analytical purposes. All data should be independently verified. This does not constitute investment advice."`,
+        tags: ["finance", "equity", "valuation", "research"]
       }
     ];
 
