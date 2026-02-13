@@ -1279,6 +1279,88 @@ If the company is Chinese-listed or a Chinese ADR:
         description: "Audits existing styling and refactors it into a cohesive design system with semantic tokens, utility classes, canonical components, and enforced template reuse.",
         prompt: `# Unified Design System\n\nPlease audit and refactor my existing styling into a cohesive design system.\n\n## Context\n\n- Respect existing visual language unless explicitly improving consistency.\n- Prefer existing tokens/utilities/components over creating new one-off patterns.\n- If a new pattern is needed, add it to the shared system first, then consume it.\n\n## Phase 1: Token Foundation\n\n- Audit current styling approach (Tailwind / vanilla CSS / CSS-in-JS).\n- Inventory existing tokens and style sources.\n- Normalize into semantic tokens:\n  - Colors (including tint/subtle variants)\n  - Spacing scale\n  - Typography scale\n  - Radius, shadows, z-index, transitions\n- Reference existing design files/style guides and preserve compatibility.\n\n## Phase 2: Utility Layer\n\n- Build/standardize utility classes for:\n  - Layout: flex, grid, gap, alignment, sizing\n  - Spacing: margin/padding scales\n  - Typography: size, weight, color, alignment\n  - Visual helpers: rounded, shadow, border, background, display\n- Remove duplicate/overlapping utilities.\n\n## Phase 3: Component Library\n\n- Define canonical reusable components for common UI patterns:\n  - Buttons (all variants/states)\n  - Badges\n  - Alerts\n  - Forms/inputs\n  - Tables\n  - Cards\n  - Modals\n  - Section headers\n- Match current product style and interaction behavior.\n\n## Template Enforcement (Mandatory)\n\n- For every use case, map existing UI to canonical components before editing.\n- Reuse canonical templates for matching use cases; do not create ad-hoc local structures/classes.\n- If two areas solve the same UI problem, they must share the same template and density rules.\n- Any exception must be explicitly listed with justification.\n\n## Phase 4: Page Refactoring\n\n- Replace inline styles with tokens/utilities/component classes.\n- Keep inline style only for true runtime-dynamic values.\n- Preserve behavior and existing UX flows.\n\n## Required Deliverables\n\n- Design System Audit Summary (what exists, what changed, what was removed).\n- Token Dictionary (final names and meaning).\n- Component Mapping Report (old pattern -> canonical component).\n- Template Coverage Report (files updated + justified exceptions).\n- Before/after notes for visual consistency improvements.\n\n## Acceptance Criteria\n\n- Consistent spacing rhythm, typography, component density, and state styling across pages.\n- Same use case = same template.\n- Minimal cognitive load and minimal style duplication.\n- No functional regressions.`,
         tags: ["claude-md", "design-system", "css", "refactoring", "ui"]
+      },
+      {
+        id: "standard-code-generation",
+        title: "Standard Code Generation Template",
+        category: "Coding",
+        popular: true,
+        description: "Generates robust, production-ready code with error handling, edge cases, and best practices — perfect for implementing entire features.",
+        prompt: `# Standard Code Generation Template\n\nI need to implement [specific functionality] in [programming language].\n\nKey requirements:\n1. [Requirement 1]\n2. [Requirement 2]\n3. [Requirement 3]\n\nPlease consider:\n- Error handling\n- Edge cases\n- Performance optimization\n- Best practices for [language/framework]\n\nPlease do not unnecessarily remove any comments or code.\nGenerate the code with clear comments explaining the logic.`,
+        tags: ["coding", "generation", "template", "production"]
+      },
+      {
+        id: "dev-mode-system-prompt",
+        title: "Dev Mode System Prompt",
+        category: "Coding",
+        popular: true,
+        description: "Sets up minimal-chatter, step-by-step coding assistance that breaks large tasks into small blocks — ideal for heavy programming sessions.",
+        prompt: `# Dev Mode System Prompt\n\nYou are helping me with heavy programming. Follow these rules:\n\n- Minimal chatter, no long explanations.\n- For each step, give me only a 1–2 sentence explanation outside the code.\n- Code must be broken into small, skinny blocks (no giant walls).\n- End each code block with a marker outside the block to show the render is complete.\n- Keep all chatter strictly outside code blocks.\n- Stay consistent across the session.`,
+        tags: ["coding", "system-prompt", "workflow", "productivity"]
+      },
+      {
+        id: "comprehensive-code-review",
+        title: "Comprehensive Code Review",
+        category: "Coding",
+        description: "Performs an in-depth code review covering quality, bugs, performance, security, and maintainability — with a 1–10 rating and refactored output.",
+        prompt: `# Comprehensive Code Review\n\nReview the following code for best practices, performance, security, and maintainability:\n\n[paste code]\n\n1. Identify issues\n2. Suggest improvements\n3. Provide refactored code\n4. Explain changes\n5. Potential edge cases\n6. Rating (1-10) with justification`,
+        tags: ["coding", "review", "security", "refactoring"]
+      },
+      {
+        id: "api-endpoint-generator",
+        title: "API Endpoint Generator",
+        category: "Coding",
+        description: "Generates complete API endpoints with authentication, validation, pagination, error handling, and unit tests for any framework and database.",
+        prompt: `# API Endpoint Generator\n\nWrite a/an [framework] API for [functionality]. It should make use of [database].\n\nInclude:\n- Endpoints with auth and validation\n- Pagination and error handling\n- Unit tests`,
+        tags: ["coding", "api", "backend", "testing"]
+      },
+      {
+        id: "crud-operations-generator",
+        title: "CRUD Operations Generator",
+        category: "Coding",
+        description: "Creates full CRUD setups including models, controllers, routes, validation, and error handling — saves hours on backend scaffolding.",
+        prompt: `# CRUD Operations Generator\n\nGenerate the full CRUD logic for managing a [resource] in [framework].\n\nInclude model definition, controller methods, and route setup.\nAdd validation, error handling, and example queries.`,
+        tags: ["coding", "crud", "backend", "scaffolding"]
+      },
+      {
+        id: "checklist-mode",
+        title: "Checklist Mode",
+        category: "Coding",
+        description: "Guides complex coding projects with numbered checklists before any code — keeps large-scale development structured and incremental.",
+        prompt: `# Checklist Mode\n\nYou are helping me with coding. Follow these rules:\n\n- Always output the next step as a numbered checklist before showing any code.\n- Keep explanations to one short sentence per checklist item.\n- Only after the checklist, show the minimal code needed for that step.\n- End each code block with a marker outside the block.`,
+        tags: ["coding", "workflow", "structured", "planning"]
+      },
+      {
+        id: "performance-optimization",
+        title: "Performance Optimization",
+        category: "Coding",
+        description: "Analyzes and optimizes code end-to-end with algorithm improvements, data structure changes, caching strategies, and before/after benchmarks.",
+        prompt: `# Performance Optimization\n\nSuggest performance optimizations for this code:\n\n[paste code]\n\nInclude:\n- Algorithm improvements\n- Data structure changes\n- Caching strategies\n- Query optimizations\n- Before/after benchmarks`,
+        tags: ["coding", "performance", "optimization", "algorithms"]
+      },
+      {
+        id: "system-design-architecture",
+        title: "System Design & Architecture",
+        category: "Coding",
+        description: "Designs entire systems with services, communication patterns, monitoring, and trade-off analysis — ideal for architecting scalable applications.",
+        prompt: `# System Design & Architecture\n\nYou are an expert at system design and architecture. Tell me how to design a [system]. The technology stack is [comma-separated list of technologies].\n\nInclude:\n- Services and their responsibilities\n- Communication patterns between services\n- Monitoring and observability strategy\n- Contrasts with alternative approaches and trade-offs`,
+        tags: ["coding", "architecture", "system-design", "scalability"]
+      },
+      {
+        id: "unit-test-suite-generator",
+        title: "Unit Test Suite Generator",
+        category: "Coding",
+        description: "Creates comprehensive test suites with coverage for normal, edge, and invalid inputs — including mocks, assertions, and setup/teardown.",
+        prompt: `# Unit Test Suite Generator\n\nGenerate unit tests for the following [library/framework] component:\n\n[paste code]\n\nUsing [testing framework].\n\nInclude:\n- Coverage for normal, edge, and invalid inputs\n- Mocks and assertions\n- Setup and teardown where needed`,
+        tags: ["coding", "testing", "unit-tests", "quality"]
+      },
+      {
+        id: "vibe-coder-refactoring",
+        title: "Vibe Coder for Refactoring",
+        category: "Coding",
+        description: "Adds features or fixes to existing code while preserving everything else — highlights exactly what changed with comments and full code output.",
+        prompt: `# Vibe Coder for Refactoring\n\nLook at the below code.\n\n[paste the full code]\n\nThis code is doing something. [describe current function]\n\nI want to make it do something extra. [describe change]\n\nPlease add the necessary changes and add comments to highlight exactly where you made the change. Don't touch any other part of the code.\n\nGive me the full code with your changes added. Give me a short explanation of the changes you made.`,
+        tags: ["coding", "refactoring", "iterative", "feature-addition"]
       }
     ];
 
