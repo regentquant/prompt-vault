@@ -1395,7 +1395,7 @@ If the company is Chinese-listed or a Chinese ADR:
             <div class="prompt-row" data-id="${p.id}">
               <div class="prompt-summary" onclick="togglePrompt('${p.id}')">
                 <div class="prompt-left">
-                  <div class="prompt-title">${esc(p.title)}${p.popular ? '<img class="popular-icon" src="assets/popular.svg" alt="Popular">' : ''}${activeCategory === 'All' || searchQuery ? `<span class="prompt-tag">${esc(p.category)}</span>` : ''}</div>
+                  <div class="prompt-title">${esc(p.title)}${p.popular ? '<img class="popular-icon" src="assets/popular.svg" alt="Popular">' : ''}${searchQuery ? `<span class="prompt-tag">${esc(p.category)}</span>` : ''}</div>
                   <div class="prompt-desc">${esc(p.description)}</div>
                 </div>
                 <div class="prompt-right">
