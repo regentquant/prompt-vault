@@ -339,7 +339,7 @@
       border-radius: 999px;
       white-space: nowrap;
       display: inline-block;
-      margin-top: 4px;
+      margin: 4px 0 2px;
     }
 
     .popular-icon {
@@ -1396,8 +1396,8 @@ If the company is Chinese-listed or a Chinese ADR:
               <div class="prompt-summary" onclick="togglePrompt('${p.id}')">
                 <div class="prompt-left">
                   <div class="prompt-title">${esc(p.title)}${p.popular ? '<img class="popular-icon" src="assets/popular.svg" alt="Popular">' : ''}</div>
-                  <div class="prompt-desc">${esc(p.description)}</div>
                   <span class="prompt-tag">${esc(p.category)}</span>
+                  <div class="prompt-desc">${esc(p.description)}</div>
                 </div>
                 <div class="prompt-right">
                   <button class="action-btn" onclick="copyPrompt(event, '${p.id}')" title="Copy">${copyIcon}</button>
