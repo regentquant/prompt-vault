@@ -135,6 +135,10 @@
       height: 20px;
     }
 
+    [data-theme="dark"] .quick-links a img.icon-invert {
+      filter: invert(1);
+    }
+
     .sidebar-label {
       font-size: 0.68rem;
       font-weight: 600;
@@ -494,13 +498,13 @@
         <img src="assets/claude.svg" alt="Claude">
       </a>
       <a href="https://chatgpt.com/" target="_blank" rel="noopener" title="ChatGPT">
-        <img src="assets/chatgpt.svg" alt="ChatGPT">
+        <img src="assets/chatgpt.svg" alt="ChatGPT" class="icon-invert">
       </a>
       <a href="https://gemini.google.com/app" target="_blank" rel="noopener" title="Gemini">
         <img src="assets/gemini.svg" alt="Gemini">
       </a>
       <a href="https://grok.com/" target="_blank" rel="noopener" title="Grok">
-        <img src="assets/grok.svg" alt="Grok">
+        <img src="assets/grok.svg" alt="Grok" class="icon-invert">
       </a>
     </div>
     <div class="sidebar-label">Categories</div>
