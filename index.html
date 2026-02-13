@@ -25,6 +25,18 @@
       --recessed: #f0ece4;
       --tag-bg: #ebe7df;
       --sidebar-w: 220px;
+      --row-hover: #f3f0e9;
+    }
+
+    [data-theme="dark"] {
+      --bg: #1a1915;
+      --text: #e0dcd4;
+      --text-secondary: #9a9488;
+      --accent: #c4a87a;
+      --border: #2e2b25;
+      --recessed: #22201b;
+      --tag-bg: #2a2722;
+      --row-hover: #22201b;
     }
 
     html {
@@ -39,6 +51,7 @@
       color: var(--text);
       line-height: 1.6;
       min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     /* ---- Sidebar ---- */
@@ -137,6 +150,23 @@
       opacity: 0.7;
     }
 
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      padding: 5px 12px;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .theme-toggle:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
     /* ---- Main ---- */
     .main {
       margin-left: var(--sidebar-w);
@@ -197,7 +227,7 @@
     }
 
     .prompt-row:hover {
-      background-color: #f3f0e9;
+      background-color: var(--row-hover);
     }
 
     .prompt-summary {
@@ -372,6 +402,11 @@
         display: none;
       }
 
+      .theme-toggle {
+        align-self: flex-start;
+        margin-top: 4px;
+      }
+
       .main {
         margin-left: 0;
         padding: 28px 20px 60px;
@@ -400,6 +435,7 @@
     <div class="sidebar-label">Categories</div>
     <ul class="sidebar-nav" id="categoryNav"></ul>
     <div class="sidebar-total" id="totalCount"></div>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Dark mode</button>
   </aside>
 
   <main class="main">
@@ -783,6 +819,27 @@ When generating frontend UI code, **never** fall into these patterns. They are t
       searchQuery = e.target.value.trim();
       renderPrompts();
     });
+
+    // Theme toggle
+    function getPreferredTheme() {
+      const stored = localStorage.getItem('theme');
+      if (stored) return stored;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('themeToggle').textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+      applyTheme(next);
+    }
+
+    applyTheme(getPreferredTheme());
 
     // Initial render
     renderNav();
