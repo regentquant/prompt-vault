@@ -347,26 +347,32 @@
       vertical-align: -2px;
     }
 
-    .copy-btn {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.78rem;
+    .action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
       color: var(--text-secondary);
       background: none;
       border: 1px solid var(--border);
-      padding: 3px 10px;
       cursor: pointer;
       transition: color 0.15s ease, border-color 0.15s ease;
-      white-space: nowrap;
     }
 
-    .copy-btn:hover {
+    .action-btn:hover {
       color: var(--accent);
       border-color: var(--accent);
     }
 
-    .copy-btn.copied {
+    .action-btn.done {
       color: var(--accent);
       border-color: var(--accent);
+    }
+
+    .action-btn svg {
+      width: 15px;
+      height: 15px;
     }
 
     /* ---- Sticky header when expanded ---- */
@@ -1352,6 +1358,11 @@ If the company is Chinese-listed or a Chinese ADR:
       return groups;
     }
 
+    // Icons
+    const copyIcon = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+    const checkIcon = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+    const downloadIcon = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 18h16"/></svg>';
+
     // Escape HTML
     function esc(str) {
       const el = document.createElement('span');
@@ -1386,7 +1397,8 @@ If the company is Chinese-listed or a Chinese ADR:
                 </div>
                 <div class="prompt-right">
                   <span class="prompt-tag">${esc(p.category)}</span>
-                  <button class="copy-btn" onclick="copyPrompt(event, '${p.id}')">Copy</button>
+                  <button class="action-btn" onclick="copyPrompt(event, '${p.id}')" title="Copy">${copyIcon}</button>
+                  <button class="action-btn" onclick="downloadPrompt(event, '${p.id}')" title="Download">${downloadIcon}</button>
                 </div>
               </div>
               <div class="prompt-body" id="body-${p.id}">
@@ -1418,15 +1430,37 @@ If the company is Chinese-listed or a Chinese ADR:
       if (!prompt) return;
 
       navigator.clipboard.writeText(prompt.prompt).then(() => {
-        const btn = event.target;
-        btn.textContent = 'Copied \u2713';
-        btn.classList.add('copied');
+        const btn = event.target.closest('.action-btn');
+        btn.innerHTML = checkIcon;
+        btn.classList.add('done');
         setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.classList.remove('copied');
+          btn.innerHTML = copyIcon;
+          btn.classList.remove('done');
         }, 1500);
-
       });
+    }
+
+    // Download prompt as .md file
+    function downloadPrompt(event, id) {
+      event.stopPropagation();
+      const prompt = PROMPTS.find(p => p.id === id);
+      if (!prompt) return;
+
+      const blob = new Blob([prompt.prompt], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = prompt.id + '.md';
+      a.click();
+      URL.revokeObjectURL(url);
+
+      const btn = event.target.closest('.action-btn');
+      btn.innerHTML = checkIcon;
+      btn.classList.add('done');
+      setTimeout(() => {
+        btn.innerHTML = downloadIcon;
+        btn.classList.remove('done');
+      }, 1500);
     }
 
     // Event: category click
