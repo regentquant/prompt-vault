@@ -86,8 +86,25 @@
     .sidebar-subtitle {
       font-size: 0.78rem;
       color: var(--text-secondary);
-      margin-bottom: 40px;
+      margin-bottom: 10px;
       line-height: 1.45;
+    }
+
+    .sidebar-credit {
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      opacity: 0.6;
+      line-height: 1.45;
+      margin-bottom: 28px;
+    }
+
+    .sidebar-credit a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .sidebar-credit a:hover {
+      text-decoration: underline;
     }
 
     /* ---- Quick links ---- */
@@ -470,7 +487,8 @@
       <div class="sidebar-title">Prompt Vault</div>
       <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme"></button>
     </div>
-    <div class="sidebar-subtitle">A curated library of prompts for AI coding and conversation.</div>
+    <div class="sidebar-subtitle">A curated collection of battle-tested prompts for AI coding agents and everyday conversations — built to copy, paste, and get to work.</div>
+    <div class="sidebar-credit">by <a href="https://github.com/regentquant" target="_blank" rel="noopener">Zhengyang Yao</a> · Developer & CEO at RegentQuant</div>
     <div class="quick-links">
       <a href="https://claude.ai/new" target="_blank" rel="noopener" title="Claude">
         <img src="assets/claude.svg" alt="Claude">
