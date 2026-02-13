@@ -451,7 +451,13 @@
         gap: 0;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        padding-bottom: 4px;
+        padding-bottom: 0;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .sidebar-nav::-webkit-scrollbar {
+        display: none;
       }
 
       .sidebar-nav button {
