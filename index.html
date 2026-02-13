@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
   <style>
     *, *::before, *::after {
       margin: 0;
@@ -263,6 +265,15 @@
       border-color: var(--accent);
     }
 
+    .copy-count {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      opacity: 0.6;
+      min-width: 16px;
+      text-align: right;
+    }
+
     /* ---- Expanded prompt ---- */
     .prompt-body {
       display: none;
@@ -400,6 +411,28 @@
 
   <script>
     // ============================================================
+    // FIREBASE — replace with your own Firebase project config
+    // https://console.firebase.google.com → create project → Realtime Database
+    // ============================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyDtule153oL6yvs2W2GRE1erjqcYnZ7HvY",
+      authDomain: "prompt-vault-52ab4.firebaseapp.com",
+      databaseURL: "https://prompt-vault-52ab4-default-rtdb.firebaseio.com",
+      projectId: "prompt-vault-52ab4",
+      storageBucket: "prompt-vault-52ab4.firebasestorage.app",
+      messagingSenderId: "660579419575",
+      appId: "1:660579419575:web:0a7a351c71e3c651e05432"
+    };
+
+    let db = null;
+    try {
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.database();
+    } catch (e) {
+      console.warn('Firebase not configured — copy counts disabled.', e);
+    }
+
+    // ============================================================
     // PROMPT DATA — edit this array to manage your prompts
     // ============================================================
     const PROMPTS = [
@@ -427,7 +460,7 @@
       },
       {
         id: "ai-ui-antipatterns",
-        title: "AI UI Antipatterns Blacklist",
+        title: "AI UI Anti-Patterns Blacklist",
         category: "Coding Agents",
         description: "Comprehensive blacklist of generic AI-generated UI patterns to avoid — purple gradients, card grids, blob decorations, and more.",
         prompt: `# AI UI Anti-Patterns Blacklist
@@ -669,6 +702,7 @@ When generating frontend UI code, **never** fall into these patterns. They are t
                 </div>
                 <div class="prompt-right">
                   <span class="prompt-tag">${esc(p.category)}</span>
+                  <span class="copy-count" data-count-id="${p.id}"></span>
                   <button class="copy-btn" onclick="copyPrompt(event, '${p.id}')">Copy</button>
                 </div>
               </div>
@@ -706,6 +740,24 @@ When generating frontend UI code, **never** fall into these patterns. They are t
           btn.textContent = 'Copy';
           btn.classList.remove('copied');
         }, 1500);
+
+        // Increment copy count in Firebase
+        if (db) {
+          const ref = db.ref('copy-counts/' + id);
+          ref.transaction((current) => (current || 0) + 1);
+        }
+      });
+    }
+
+    // Load and display copy counts from Firebase
+    function loadCopyCounts() {
+      if (!db) return;
+      db.ref('copy-counts').on('value', (snapshot) => {
+        const counts = snapshot.val() || {};
+        for (const [id, count] of Object.entries(counts)) {
+          const el = document.querySelector(`[data-count-id="${id}"]`);
+          if (el) el.textContent = count;
+        }
       });
     }
 
@@ -727,6 +779,7 @@ When generating frontend UI code, **never** fall into these patterns. They are t
     // Initial render
     renderNav();
     renderPrompts();
+    loadCopyCounts();
   </script>
 </body>
 </html>
