@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #f8f6f1;
+      --text: #2c2a25;
+      --text-secondary: #6e695f;
+      --accent: #8b7355;
+      --border: #e0dcd4;
+      --recessed: #f0ece4;
+      --tag-bg: #ebe7df;
+      --sidebar-w: 220px;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ---- Sidebar ---- */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-w);
+      height: 100vh;
+      padding: 48px 28px 32px;
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.55rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .sidebar-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      line-height: 1.45;
+    }
+
+    .sidebar-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sidebar-nav li {
+      position: relative;
+    }
+
+    .sidebar-nav button {
+      background: none;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 5px 0 5px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      transition: color 0.15s ease;
+      border-left: 2px solid transparent;
+    }
+
+    .sidebar-nav button:hover {
+      color: var(--accent);
+    }
+
+    .sidebar-nav button.active {
+      color: var(--accent);
+      font-weight: 500;
+      border-left-color: var(--accent);
+    }
+
+    .sidebar-nav .cat-count {
+      font-size: 0.75rem;
+      color: var(--border);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .sidebar-nav button.active .cat-count {
+      color: var(--accent);
+      opacity: 0.55;
+    }
+
+    .sidebar-total {
+      margin-top: auto;
+      padding-top: 24px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      opacity: 0.7;
+    }
+
+    /* ---- Main ---- */
+    .main {
+      margin-left: var(--sidebar-w);
+      padding: 48px 56px 80px;
+      max-width: 860px;
+    }
+
+    /* ---- Search ---- */
+    .search-wrap {
+      margin-bottom: 48px;
+    }
+
+    .search-input {
+      width: 100%;
+      max-width: 380px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      color: var(--text);
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      padding: 6px 0;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .search-input::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.6;
+    }
+
+    .search-input:focus {
+      border-bottom-color: var(--accent);
+    }
+
+    /* ---- Category groups ---- */
+    .category-group {
+      margin-bottom: 52px;
+    }
+
+    .category-header {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    /* ---- Prompt rows ---- */
+    .prompt-row {
+      border-top: 1px solid var(--border);
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .prompt-row:last-child {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .prompt-row:hover {
+      background-color: #f3f0e9;
+    }
+
+    .prompt-summary {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 14px 0;
+      gap: 16px;
+    }
+
+    .prompt-left {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .prompt-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 3px;
+      line-height: 1.35;
+    }
+
+    .prompt-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    .prompt-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    .prompt-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      background: var(--tag-bg);
+      color: var(--text-secondary);
+      padding: 3px 8px;
+      white-space: nowrap;
+    }
+
+    .copy-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      background: none;
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      cursor: pointer;
+      transition: color 0.15s ease, border-color 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .copy-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .copy-btn.copied {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* ---- Expanded prompt ---- */
+    .prompt-body {
+      display: none;
+      padding: 0 0 18px;
+    }
+
+    .prompt-body.open {
+      display: block;
+    }
+
+    .prompt-body-inner {
+      background: var(--recessed);
+      border-left: 2px solid var(--accent);
+      padding: 16px 20px;
+      overflow-x: auto;
+    }
+
+    .prompt-body-inner pre {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      color: var(--text);
+    }
+
+    /* ---- Tags row inside expanded ---- */
+    .prompt-tags {
+      display: flex;
+      gap: 6px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .prompt-tags span {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--text-secondary);
+      opacity: 0.7;
+    }
+
+    /* ---- No results ---- */
+    .no-results {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      padding: 32px 0;
+    }
+
+    /* ---- Mobile ---- */
+    @media (max-width: 768px) {
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 24px 20px 16px;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .sidebar-subtitle {
+        margin-bottom: 12px;
+      }
+
+      .sidebar-label {
+        margin-bottom: 8px;
+      }
+
+      .sidebar-nav {
+        flex-direction: row;
+        gap: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 4px;
+      }
+
+      .sidebar-nav button {
+        padding: 6px 14px;
+        white-space: nowrap;
+        border-left: none;
+        border-bottom: 2px solid transparent;
+        font-size: 0.84rem;
+      }
+
+      .sidebar-nav button.active {
+        border-left: none;
+        border-bottom-color: var(--accent);
+      }
+
+      .sidebar-nav .cat-count {
+        display: none;
+      }
+
+      .sidebar-total {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 28px 20px 60px;
+      }
+
+      .search-input {
+        max-width: 100%;
+      }
+
+      .prompt-summary {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .prompt-right {
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-title">Prompt Vault</div>
+    <div class="sidebar-subtitle">A curated library of prompts for AI coding and conversation.</div>
+    <div class="sidebar-label">Categories</div>
+    <ul class="sidebar-nav" id="categoryNav"></ul>
+    <div class="sidebar-total" id="totalCount"></div>
+  </aside>
+
+  <main class="main">
+    <div class="search-wrap">
+      <input type="text" class="search-input" id="searchInput" placeholder="Search prompts...">
+    </div>
+    <div id="promptContainer"></div>
+  </main>
+
+  <script>
+    // ============================================================
+    // PROMPT DATA — edit this array to manage your prompts
+    // ============================================================
+    const PROMPTS = [
+      {
+        id: "auto-plan-code",
+        title: "AUTO Plan & Code",
+        category: "Coding Agents",
+        description: "Forces the agent to output a full plan before touching any code, then execute without stopping.",
+        prompt: `1. Before writing or editing any code, first output a detailed step-by-step plan (files to modify, specific changes, rationale)
+2. Immediately execute the full plan without pausing for confirmation`,
+        tags: ["claude-md", "workflow", "planning"]
+      },
+      {
+        id: "auto-commit-workflow",
+        title: "AUTO Commit Workflow",
+        category: "Coding Agents",
+        description: "One commit per logical task, concise subject lines, no hook skipping.",
+        prompt: `- **Commit and push once per task**, not after every individual file change
+- A "task" is one logical unit of work (e.g., a feature, a bug fix, a refactor) — bundle all related file changes into a single commit
+- Use \`git commit -m "subject line"\` with a concise, descriptive subject line only (no body, no multi-line)
+- Stage only the files you modified: \`git add <specific-files>\` then commit
+- Push to remote after the commit: \`git push\`
+- Do NOT use \`--no-verify\` or skip hooks unless explicitly asked`,
+        tags: ["claude-md", "git", "workflow"]
+      },
+      {
+        id: "ai-ui-antipatterns",
+        title: "AI UI Antipatterns Blacklist",
+        category: "Coding Agents",
+        description: "Comprehensive blacklist of generic AI-generated UI patterns to avoid — purple gradients, card grids, blob decorations, and more.",
+        prompt: `# AI UI Anti-Patterns Blacklist
+
+When generating frontend UI code, **never** fall into these patterns. They are the telltale signs of generic, AI-generated design — instantly recognizable and devoid of personality.
+
+---
+
+## CRITICAL — Instant AI Detection
+
+### 1. The Purple Gradient Plague
+**Do not** use purple-to-blue or purple-to-pink gradients on white backgrounds. This is the single most recognizable AI aesthetic.
+- Avoid: \`linear-gradient(135deg, #667eea, #764ba2)\`
+- Avoid: \`linear-gradient(to right, #6366f1, #a855f7, #ec4899)\`
+- Avoid: purple hero → white card grid → purple CTA footer
+
+### 2. The Inter/System Font Default
+**Do not** default to Inter, Roboto, system-ui, or Arial. These have zero typographic personality.
+- Avoid: using the same font family for headlines and body with no pairing
+- Avoid: identical weight/size ratios across every project
+- Instead: choose a distinctive display font paired with a refined body font
+
+### 3. Raw Tailwind Default Colors
+**Do not** ship Tailwind's default palette without customization.
+- Avoid: \`bg-indigo-600 text-white rounded-lg shadow-md\`
+- Avoid: \`bg-gray-50 border border-gray-200\`
+- Avoid: \`text-gray-600\` as universal body text color
+- Avoid: mechanical spacing like p-4, p-6, p-8 with no rhythm
+
+### 4. Unstyled shadcn/UI Components
+**Do not** use raw shadcn/ui components with zero customization.
+- Avoid: default zinc/slate color scheme unchanged
+- Avoid: \`border-border\`, \`bg-card\`, \`text-foreground\` without overrides
+- Avoid: output that looks like a component library documentation page
+
+---
+
+## HIGH — Very Common, Kills Originality
+
+### 5. The 3-Column Card Grid
+**Do not** default to three identical rounded cards in a row, each with icon + title + description.
+- Avoid: \`rounded-xl shadow-lg p-6\` on identical cards
+- Avoid: equal spacing with zero visual hierarchy
+- Avoid: hover effect limited to \`translateY(-4px)\` + shadow increase
+
+### 6. The Centered Hero Formula
+**Do not** output the centered headline → subtitle → two buttons pattern every time.
+- Avoid: \`text-center max-w-3xl mx-auto\` as automatic hero layout
+- Avoid: "Get Started" (filled) + "Learn More" (outlined) button pair
+- Avoid: gradient text on the headline with blurred circle decorations behind
+
+### 7. Emoji & Lucide Icon Soup
+**Do not** scatter random emojis or generic icons as section markers.
+- Avoid: 🚀 Performance ⚡ Speed 🎨 Design 🔒 Security
+- Avoid: Sparkles icon on everything
+- Avoid: icons chosen for aesthetics rather than communication
+
+### 8. The Fake SaaS Dashboard
+**Do not** produce the sidebar + topbar + 4 stat cards + chart layout with fake data.
+- Avoid: 4 stat cards in a row with green/red percentages
+- Avoid: sidebar with "Dashboard, Analytics, Settings, Profile"
+- Avoid: Recharts LineChart with smooth fake data that does nothing
+
+### 9. The Space Grotesk Convergence
+**Do not** converge on Space Grotesk, Poppins, Outfit, or Sora when trying to be "creative."
+- These are the new Inter — slightly more interesting but equally overused in AI outputs
+- Instead: do actual typographic research; pick fonts that match the specific project context
+
+### 10. Mechanical Symmetry & Spacing
+**Do not** make everything perfectly centered and symmetrical with uniform padding.
+- Avoid: \`mx-auto text-center\` on everything
+- Avoid: identical padding on all cards and sections
+- Avoid: perfect 1:1:1 column ratios with zero visual tension
+- Instead: use asymmetry, negative space, grid-breaking elements, and varied rhythm
+
+---
+
+## MEDIUM — Context-Dependent, Often Layered On
+
+### 11. Gratuitous Glassmorphism
+**Do not** apply \`backdrop-blur\` on everything over gradient backgrounds.
+- Avoid: \`bg-white/80 backdrop-blur-xl\` as a universal card style
+- Avoid: blurred circles behind glass cards with no consideration for readability
+- Use frosted glass sparingly and only when it serves the design purpose
+
+### 12. The Dark Mode Cliché
+**Do not** default to \`bg-gray-900\` + white text + neon cyan/teal accents.
+- Avoid: \`bg-gray-900 text-white\` as the automatic dark theme
+- Avoid: cyan/teal glow effects and \`border-cyan-400/50\`
+- Avoid: \`from-gray-900 to-black\` gradient backgrounds
+
+### 13. Floating Blob Decorations
+**Do not** place random blurred gradient circles behind content for "decoration."
+- Avoid: \`absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full blur-3xl opacity-30\`
+- Avoid: multiple overlapping blurred circles with no compositional purpose
+- Avoid: same blob placement and color across different projects
+
+### 14. The Universal Hover Effect
+**Do not** apply the same hover effect to every interactive element.
+- Avoid: \`hover:scale-105 transition-all duration-300\` on everything
+- Avoid: \`hover:shadow-xl\` (from shadow-md) as universal hover
+- Avoid: \`hover:-translate-y-1\` on all cards
+- Instead: vary hover behavior by context — some elements should dim, shift color, reveal content, or do nothing
+
+### 15. The Fake Testimonial Block
+**Do not** generate three testimonial cards with circular avatars, fake names, and generic praise.
+- Avoid: circular avatar placeholder + "Jane Doe, CEO at TechCorp"
+- Avoid: giant quotation marks as decoration
+- Avoid: "This product changed my life!" with 5/5 stars, always exactly 3 testimonials
+
+### 16. Gradient Text on Every Headline
+**Do not** apply \`bg-clip-text text-transparent bg-gradient-to-r\` to every headline.
+- Avoid: \`from-purple-600 to-pink-600\` or \`from-blue-600 to-cyan-600\` on all headings
+- If everything is gradient, nothing stands out
+- Reserve gradient text for one key element maximum, if used at all
+
+---
+
+## What To Do Instead
+
+1. **Choose a bold, specific aesthetic direction** — brutalist, editorial, retro-futuristic, organic, luxury, industrial, playful — and commit fully
+2. **Pick distinctive fonts** — research actual typefaces; pair a characterful display font with a clean body font
+3. **Build a custom color palette** — derive colors from the project's context, not from Tailwind defaults
+4. **Break the grid** — use asymmetry, overlap, diagonal flow, generous negative space, or controlled density
+5. **Add atmosphere** — noise textures, geometric patterns, layered transparencies, dramatic shadows, custom cursors instead of generic blurred circles
+6. **Vary interactions** — different hover states for different elements; scroll-triggered reveals; one well-orchestrated animation sequence instead of identical transitions everywhere
+7. **Make it specific** — every design should feel like it was made for *this* project, not stamped from a template`,
+        tags: ["ui", "design", "antipatterns", "frontend"]
+      }
+    ];
+
+    // ============================================================
+    // APP LOGIC
+    // ============================================================
+
+    const categoryNav = document.getElementById('categoryNav');
+    const promptContainer = document.getElementById('promptContainer');
+    const searchInput = document.getElementById('searchInput');
+    const totalCount = document.getElementById('totalCount');
+
+    let activeCategory = 'All';
+    let searchQuery = '';
+
+    // Derive categories
+    function getCategories() {
+      const cats = [];
+      const seen = new Set();
+      for (const p of PROMPTS) {
+        if (!seen.has(p.category)) {
+          seen.add(p.category);
+          cats.push(p.category);
+        }
+      }
+      return cats;
+    }
+
+    // Count prompts per category
+    function countByCategory(cat) {
+      return PROMPTS.filter(p => p.category === cat).length;
+    }
+
+    // Build sidebar
+    function renderNav() {
+      const categories = getCategories();
+      let html = '';
+
+      html += `<li><button class="${activeCategory === 'All' ? 'active' : ''}" data-cat="All">All<span class="cat-count">${PROMPTS.length}</span></button></li>`;
+      for (const cat of categories) {
+        const isActive = activeCategory === cat;
+        html += `<li><button class="${isActive ? 'active' : ''}" data-cat="${cat}">${cat}<span class="cat-count">${countByCategory(cat)}</span></button></li>`;
+      }
+
+      categoryNav.innerHTML = html;
+      totalCount.textContent = `${PROMPTS.length} prompts`;
+    }
+
+    // Filter prompts
+    function getFilteredPrompts() {
+      let results = PROMPTS;
+
+      if (activeCategory !== 'All') {
+        results = results.filter(p => p.category === activeCategory);
+      }
+
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        results = results.filter(p =>
+          p.title.toLowerCase().includes(q) ||
+          p.description.toLowerCase().includes(q) ||
+          p.prompt.toLowerCase().includes(q) ||
+          p.tags.some(t => t.toLowerCase().includes(q))
+        );
+      }
+
+      return results;
+    }
+
+    // Group prompts by category
+    function groupByCategory(prompts) {
+      const groups = new Map();
+      for (const p of prompts) {
+        if (!groups.has(p.category)) groups.set(p.category, []);
+        groups.get(p.category).push(p);
+      }
+      return groups;
+    }
+
+    // Escape HTML
+    function esc(str) {
+      const el = document.createElement('span');
+      el.textContent = str;
+      return el.innerHTML;
+    }
+
+    // Render prompts
+    function renderPrompts() {
+      const filtered = getFilteredPrompts();
+
+      if (filtered.length === 0) {
+        promptContainer.innerHTML = '<div class="no-results">No prompts found.</div>';
+        return;
+      }
+
+      const grouped = groupByCategory(filtered);
+      let html = '';
+
+      for (const [category, prompts] of grouped) {
+        html += `<div class="category-group">`;
+        if (activeCategory === 'All' || searchQuery) {
+          html += `<div class="category-header">${esc(category)}</div>`;
+        }
+        for (const p of prompts) {
+          html += `
+            <div class="prompt-row" data-id="${p.id}">
+              <div class="prompt-summary" onclick="togglePrompt('${p.id}')">
+                <div class="prompt-left">
+                  <div class="prompt-title">${esc(p.title)}</div>
+                  <div class="prompt-desc">${esc(p.description)}</div>
+                </div>
+                <div class="prompt-right">
+                  <span class="prompt-tag">${esc(p.category)}</span>
+                  <button class="copy-btn" onclick="copyPrompt(event, '${p.id}')">Copy</button>
+                </div>
+              </div>
+              <div class="prompt-body" id="body-${p.id}">
+                <div class="prompt-body-inner">
+                  <pre>${esc(p.prompt)}</pre>
+                </div>
+                ${p.tags.length ? `<div class="prompt-tags">${p.tags.map(t => `<span>#${esc(t)}</span>`).join('')}</div>` : ''}
+              </div>
+            </div>`;
+        }
+        html += `</div>`;
+      }
+
+      promptContainer.innerHTML = html;
+    }
+
+    // Toggle expand/collapse
+    function togglePrompt(id) {
+      const body = document.getElementById('body-' + id);
+      if (body) body.classList.toggle('open');
+    }
+
+    // Copy prompt
+    function copyPrompt(event, id) {
+      event.stopPropagation();
+      const prompt = PROMPTS.find(p => p.id === id);
+      if (!prompt) return;
+
+      navigator.clipboard.writeText(prompt.prompt).then(() => {
+        const btn = event.target;
+        btn.textContent = 'Copied \u2713';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 1500);
+      });
+    }
+
+    // Event: category click
+    categoryNav.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-cat]');
+      if (!btn) return;
+      activeCategory = btn.dataset.cat;
+      renderNav();
+      renderPrompts();
+    });
+
+    // Event: search
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      renderPrompts();
+    });
+
+    // Initial render
+    renderNav();
+    renderPrompts();
+  </script>
+</body>
+</html>
