@@ -1376,17 +1376,22 @@ If the company is Chinese-listed or a Chinese ADR:
     let activeCategory = 'All';
     let searchQuery = '';
 
-    // Derive categories
+    // Fixed category order — all 10 always shown
+    const ALL_CATEGORIES = [
+      "Coding",
+      "Writing & Editing",
+      "Content Creation",
+      "Research & Analysis",
+      "Reasoning & Frameworks",
+      "Extraction & Summarization",
+      "Data & Automation",
+      "System Prompts & Meta",
+      "Learning",
+      "Productivity & Business"
+    ];
+
     function getCategories() {
-      const cats = [];
-      const seen = new Set();
-      for (const p of PROMPTS) {
-        if (!seen.has(p.category)) {
-          seen.add(p.category);
-          cats.push(p.category);
-        }
-      }
-      return cats;
+      return ALL_CATEGORIES;
     }
 
     // Count prompts per category
