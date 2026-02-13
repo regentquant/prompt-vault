@@ -333,18 +333,13 @@
       white-space: nowrap;
     }
 
-    .popular-badge {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.62rem;
-      font-weight: 500;
-      letter-spacing: 0.03em;
-      color: var(--accent);
-      background: var(--tag-bg);
-      border: 1px solid var(--accent);
-      padding: 2px 7px;
-      white-space: nowrap;
-      margin-left: 8px;
-      vertical-align: middle;
+    .popular-icon {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      margin-left: 6px;
+      vertical-align: -1px;
+      opacity: 0.7;
     }
 
     .copy-btn {
@@ -1412,7 +1407,7 @@ If the company is Chinese-listed or a Chinese ADR:
             <div class="prompt-row" data-id="${p.id}">
               <div class="prompt-summary" onclick="togglePrompt('${p.id}')">
                 <div class="prompt-left">
-                  <div class="prompt-title">${esc(p.title)}${p.popular ? '<span class="popular-badge">Popular</span>' : ''}</div>
+                  <div class="prompt-title">${esc(p.title)}${p.popular ? '<svg class="popular-icon" viewBox="0 0 16 16" fill="var(--accent)"><path d="M8 1c.5 3-1.5 4.5-1.5 4.5S8 4 9 2.5C10.5 4.5 12 7 12 9.5 12 12 10.2 14 8 14S4 12 4 9.5c0-2 1.2-4.2 2.5-6C7 2.8 7.5 2 8 1z"/></svg>' : ''}</div>
                   <div class="prompt-desc">${esc(p.description)}</div>
                 </div>
                 <div class="prompt-right">
