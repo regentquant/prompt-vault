@@ -571,7 +571,7 @@
       {
         id: "auto-plan-code",
         title: "AUTO Plan & Code",
-        category: "Coding Agents",
+        category: "Coding",
         popular: true,
         description: "Forces the agent to output a full plan before touching any code, then execute without stopping.",
         prompt: `# AUTO Plan & Code\n\n1. Before writing or editing any code, first output a detailed step-by-step plan (files to modify, specific changes, rationale)
@@ -581,7 +581,7 @@
       {
         id: "auto-commit-workflow",
         title: "AUTO Commit Workflow",
-        category: "Coding Agents",
+        category: "Coding",
         popular: true,
         description: "One commit per logical task, concise subject lines, no hook skipping.",
         prompt: `# AUTO Commit Workflow\n\n- **Commit and push once per task**, not after every individual file change
@@ -595,7 +595,7 @@
       {
         id: "ai-ui-antipatterns",
         title: "AI UI Anti-Patterns Blacklist",
-        category: "Coding Agents",
+        category: "Coding",
         description: "Comprehensive blacklist of generic AI-generated UI patterns to avoid — purple gradients, card grids, blob decorations, and more.",
         prompt: `# AI UI Anti-Patterns Blacklist
 
@@ -1242,7 +1242,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "senior-code-reviewer",
         title: "Senior Code Reviewer",
-        category: "Coding Agents",
+        category: "Coding",
         description: "Thorough multi-dimensional code review covering bugs, security, performance, maintainability, and edge cases with severity ratings and actionable fixes.",
         prompt: `# Senior Code Reviewer\n\nYou are a senior software engineer with 15+ years of experience conducting thorough code reviews. You are meticulous, opinionated, and care deeply about code quality. You don't give diplomatic reviews — you give honest ones.\n\n## Review Dimensions\n\nAnalyze the code across ALL of the following dimensions:\n\n### 1. Bugs & Logic Errors\n- Off-by-one errors, null/undefined handling, race conditions\n- Incorrect boolean logic, operator precedence issues\n- Unhandled edge cases, boundary conditions\n- State management bugs, stale closures, memory leaks\n- Type coercion issues, implicit conversions\n\n### 2. Security Vulnerabilities\n- Injection risks (SQL, XSS, command injection, path traversal)\n- Authentication and authorization flaws\n- Sensitive data exposure (logging secrets, hardcoded credentials, PII leaks)\n- Insecure deserialization, unsafe eval/exec usage\n- Missing input validation and sanitization\n- CSRF, CORS misconfiguration, insecure direct object references\n\n### 3. Performance\n- N+1 queries, unnecessary database calls\n- Inefficient loops, redundant computations, missing memoization\n- Blocking operations in async contexts\n- Excessive memory allocation, missing cleanup\n- Missing pagination, unbounded queries, large payload handling\n\n### 4. Maintainability & Code Quality\n- Naming clarity (variables, functions, classes)\n- Function/method length and complexity (cyclomatic complexity)\n- Code duplication (DRY violations)\n- SOLID principle violations\n- Missing or misleading comments\n- Dead code, unused imports, TODO debt\n\n### 5. Architecture & Design\n- Separation of concerns violations\n- Inappropriate coupling between modules\n- Missing abstraction or over-abstraction\n- Error handling strategy (consistency, granularity)\n- API design issues (naming, REST conventions, response shapes)\n\n### 6. Edge Cases & Robustness\n- What inputs would break this?\n- Empty/null/undefined inputs, zero-length collections\n- Concurrent access scenarios\n- Network failures, timeout handling\n- Malformed data, unexpected types\n\n## Output Format\n\nFor each issue found:\n\n| Field | Content |\n|---|---|\n| **Severity** | Critical / High / Medium / Low / Nit |\n| **Category** | Bug / Security / Performance / Maintainability / Architecture / Edge Case |\n| **Location** | File, function, or line reference |\n| **Issue** | What's wrong — specific and clear |\n| **Why it matters** | What breaks, what's the risk |\n| **Fix** | Concrete code suggestion or approach |\n\n## Final Summary\n\nAfter the detailed review, provide:\n1. **Overall assessment**: Ship as-is / Ship with minor fixes / Needs significant revision / Do not ship\n2. **Top 3 most critical issues** that must be addressed before merging\n3. **One thing done well** — acknowledge good patterns you see\n\n## Instructions\n\nReview the following code. Be thorough. Be harsh. Miss nothing.\n\n[PASTE YOUR CODE OR DIFF]`,
         tags: ["code-review", "security", "quality", "bugs"]
@@ -1274,7 +1274,7 @@ If the company is Chinese-listed or a Chinese ADR:
       {
         id: "unified-design-system",
         title: "Unified Design System",
-        category: "Coding Agents",
+        category: "Coding",
         popular: true,
         description: "Audits existing styling and refactors it into a cohesive design system with semantic tokens, utility classes, canonical components, and enforced template reuse.",
         prompt: `# Unified Design System\n\nPlease audit and refactor my existing styling into a cohesive design system.\n\n## Context\n\n- Respect existing visual language unless explicitly improving consistency.\n- Prefer existing tokens/utilities/components over creating new one-off patterns.\n- If a new pattern is needed, add it to the shared system first, then consume it.\n\n## Phase 1: Token Foundation\n\n- Audit current styling approach (Tailwind / vanilla CSS / CSS-in-JS).\n- Inventory existing tokens and style sources.\n- Normalize into semantic tokens:\n  - Colors (including tint/subtle variants)\n  - Spacing scale\n  - Typography scale\n  - Radius, shadows, z-index, transitions\n- Reference existing design files/style guides and preserve compatibility.\n\n## Phase 2: Utility Layer\n\n- Build/standardize utility classes for:\n  - Layout: flex, grid, gap, alignment, sizing\n  - Spacing: margin/padding scales\n  - Typography: size, weight, color, alignment\n  - Visual helpers: rounded, shadow, border, background, display\n- Remove duplicate/overlapping utilities.\n\n## Phase 3: Component Library\n\n- Define canonical reusable components for common UI patterns:\n  - Buttons (all variants/states)\n  - Badges\n  - Alerts\n  - Forms/inputs\n  - Tables\n  - Cards\n  - Modals\n  - Section headers\n- Match current product style and interaction behavior.\n\n## Template Enforcement (Mandatory)\n\n- For every use case, map existing UI to canonical components before editing.\n- Reuse canonical templates for matching use cases; do not create ad-hoc local structures/classes.\n- If two areas solve the same UI problem, they must share the same template and density rules.\n- Any exception must be explicitly listed with justification.\n\n## Phase 4: Page Refactoring\n\n- Replace inline styles with tokens/utilities/component classes.\n- Keep inline style only for true runtime-dynamic values.\n- Preserve behavior and existing UX flows.\n\n## Required Deliverables\n\n- Design System Audit Summary (what exists, what changed, what was removed).\n- Token Dictionary (final names and meaning).\n- Component Mapping Report (old pattern -> canonical component).\n- Template Coverage Report (files updated + justified exceptions).\n- Before/after notes for visual consistency improvements.\n\n## Acceptance Criteria\n\n- Consistent spacing rhythm, typography, component density, and state styling across pages.\n- Same use case = same template.\n- Minimal cognitive load and minimal style duplication.\n- No functional regressions.`,
