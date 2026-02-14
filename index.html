@@ -358,7 +358,9 @@
       padding: 1px 6px;
       margin-left: 8px;
       border-radius: 4px;
-      vertical-align: middle;
+      vertical-align: baseline;
+      position: relative;
+      top: -2px;
       background: color-mix(in srgb, var(--accent) 12%, transparent);
       color: var(--accent);
       border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
@@ -440,6 +442,113 @@
       font-size: 0.65rem;
       color: var(--text-secondary);
       opacity: 0.7;
+    }
+
+    /* ---- Prompt Finder ---- */
+    .finder-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      color: var(--accent);
+      background: none;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease;
+      margin-bottom: 16px;
+    }
+
+    .finder-toggle:hover {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 6%, transparent);
+    }
+
+    .finder-toggle svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .finder-panel {
+      display: none;
+      margin-bottom: 32px;
+      border: 1px solid var(--border);
+      padding: 20px;
+    }
+
+    .finder-panel.open {
+      display: block;
+    }
+
+    .finder-label {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .finder-textarea {
+      width: 100%;
+      min-height: 72px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text);
+      background: var(--recessed);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      resize: vertical;
+      outline: none;
+      line-height: 1.5;
+      transition: border-color 0.15s ease;
+    }
+
+    .finder-textarea::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.6;
+    }
+
+    .finder-textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .finder-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .finder-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--bg);
+      background: var(--accent);
+      border: none;
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+    }
+
+    .finder-btn:hover {
+      opacity: 0.85;
+    }
+
+    .finder-btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    .finder-feedback {
+      font-size: 0.78rem;
+      color: var(--accent);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .finder-feedback.show {
+      opacity: 1;
     }
 
     /* ---- No results ---- */
@@ -574,6 +683,18 @@
   <main class="main">
     <div class="search-wrap">
       <input type="text" class="search-input" id="searchInput" placeholder="Search prompts...">
+    </div>
+    <button class="finder-toggle" id="finderToggle" onclick="toggleFinder()">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456Z"/></svg>
+      Not sure which prompt to use? Let AI help
+    </button>
+    <div class="finder-panel" id="finderPanel">
+      <div class="finder-label">Describe what you're trying to do — we'll generate a prompt you can paste into any AI to get personalized recommendations from our library.</div>
+      <textarea class="finder-textarea" id="finderInput" placeholder="e.g. I want to unify my web app's UI and make it look consistent..."></textarea>
+      <div class="finder-actions">
+        <button class="finder-btn" id="finderBtn" onclick="generateFinderPrompt()">Generate & Copy</button>
+        <span class="finder-feedback" id="finderFeedback">Copied to clipboard — paste into any AI</span>
+      </div>
     </div>
     <div id="promptContainer"></div>
   </main>
@@ -1755,6 +1876,47 @@ My wish: [DESCRIBE WHAT YOU WISH EXISTED]`,
       const atEnd = categoryNav.scrollLeft + categoryNav.clientWidth >= categoryNav.scrollWidth - 2;
       categoryNav.classList.toggle('scrolled-end', atEnd);
     });
+
+    // ---- Prompt Finder ----
+    function toggleFinder() {
+      document.getElementById('finderPanel').classList.toggle('open');
+    }
+
+    function generateFinderPrompt() {
+      const input = document.getElementById('finderInput').value.trim();
+      if (!input) return;
+
+      const catalog = PROMPTS.map(p => `- **${p.title}**: ${p.description}`).join('\n');
+
+      const metaPrompt = `You are a prompt recommendation assistant. A user needs help finding the right prompts from a curated library called Prompt Vault.
+
+**User's Request:**
+${input}
+
+**Your Task:**
+1. Carefully analyze what the user is trying to accomplish.
+2. Review every prompt in the available catalog below.
+3. Recommend the most relevant prompt(s) that would help with the user's need.
+4. Strictly follow the output format below — do not deviate.
+
+**Output Format:**
+
+If matching prompts exist:
+For each recommended prompt, output:
+- **[Prompt Title]** — one sentence explaining why this prompt is relevant to the user's request.
+
+If NO prompts match the request:
+"None of the available prompts in Prompt Vault match your request."
+
+**Available Prompts:**
+${catalog}`;
+
+      navigator.clipboard.writeText(metaPrompt).then(() => {
+        const feedback = document.getElementById('finderFeedback');
+        feedback.classList.add('show');
+        setTimeout(() => feedback.classList.remove('show'), 3000);
+      });
+    }
 
     // Initial render
     renderNav();
