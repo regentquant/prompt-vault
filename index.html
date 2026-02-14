@@ -551,30 +551,52 @@
       opacity: 1;
     }
 
-    .finder-btn-icon {
-      display: inline-flex;
+    .finder-open-row {
+      display: none;
+      align-items: center;
+      gap: 14px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .finder-open-row.show {
+      display: flex;
+      animation: finderReveal 0.35s ease;
+    }
+
+    @keyframes finderReveal {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .finder-open-label {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .finder-open-icon {
+      display: flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
-      background: none;
-      border: 1px solid var(--border);
-      cursor: pointer;
-      transition: border-color 0.15s ease, opacity 0.15s ease;
-      opacity: 0.6;
+      width: 28px;
+      height: 28px;
+      opacity: 0.5;
+      transition: opacity 0.15s ease, transform 0.15s ease;
     }
 
-    .finder-btn-icon:hover {
-      border-color: var(--accent);
+    .finder-open-icon:hover {
       opacity: 1;
+      transform: scale(1.15);
     }
 
-    .finder-btn-icon img {
-      width: 16px;
-      height: 16px;
+    .finder-open-icon img {
+      width: 20px;
+      height: 20px;
     }
 
-    [data-theme="dark"] .finder-btn-icon img.icon-invert {
+    [data-theme="dark"] .finder-open-icon img.icon-invert {
       filter: invert(1);
     }
 
@@ -720,13 +742,28 @@
       <textarea class="finder-textarea" id="finderInput" placeholder="e.g. I want to unify my web app's UI and make it look consistent..."></textarea>
       <div class="finder-actions">
         <button class="finder-btn" id="finderBtn" onclick="generateFinderPrompt()">Generate & Copy</button>
-        <button class="finder-btn-icon" onclick="openFinderIn('https://chatgpt.com/')" title="Copy & open in ChatGPT">
-          <img src="assets/chatgpt.svg" alt="ChatGPT" class="icon-invert">
-        </button>
-        <button class="finder-btn-icon" onclick="openFinderIn('https://grok.com/')" title="Copy & open in Grok">
-          <img src="assets/grok.svg" alt="Grok" class="icon-invert">
-        </button>
         <span class="finder-feedback" id="finderFeedback"></span>
+      </div>
+      <div class="finder-open-row" id="finderOpenRow">
+        <span class="finder-open-label">Now paste in:</span>
+        <a href="https://chatgpt.com/" target="_blank" rel="noopener" title="ChatGPT" class="finder-open-icon">
+          <img src="assets/chatgpt.svg" alt="ChatGPT" class="icon-invert">
+        </a>
+        <a href="https://grok.com/" target="_blank" rel="noopener" title="Grok" class="finder-open-icon">
+          <img src="assets/grok.svg" alt="Grok" class="icon-invert">
+        </a>
+        <a href="https://claude.ai/new" target="_blank" rel="noopener" title="Claude" class="finder-open-icon">
+          <img src="assets/claude.svg" alt="Claude">
+        </a>
+        <a href="https://gemini.google.com/app" target="_blank" rel="noopener" title="Gemini" class="finder-open-icon">
+          <img src="assets/gemini.svg" alt="Gemini">
+        </a>
+        <a href="https://chat.deepseek.com/" target="_blank" rel="noopener" title="DeepSeek" class="finder-open-icon">
+          <img src="assets/deepseek.svg" alt="DeepSeek">
+        </a>
+        <a href="https://chat.z.ai/" target="_blank" rel="noopener" title="Z.AI" class="finder-open-icon">
+          <img src="assets/z_ai.svg" alt="Z.AI" class="icon-invert">
+        </a>
       </div>
     </div>
     <div id="promptContainer"></div>
@@ -1956,16 +1993,11 @@ ${catalog}`;
       const metaPrompt = buildFinderPrompt();
       if (!metaPrompt) return;
       navigator.clipboard.writeText(metaPrompt).then(() => {
-        showFinderFeedback('Copied! Now paste it into any AI chatbot and send.');
-      });
-    }
-
-    function openFinderIn(url) {
-      const metaPrompt = buildFinderPrompt();
-      if (!metaPrompt) return;
-      navigator.clipboard.writeText(metaPrompt).then(() => {
-        showFinderFeedback('Copied! Opening now — just paste (Ctrl+V) and send.');
-        window.open(url, '_blank');
+        showFinderFeedback('Copied! Pick an AI below to open it, then paste and send.');
+        const row = document.getElementById('finderOpenRow');
+        row.classList.remove('show');
+        void row.offsetWidth;
+        row.classList.add('show');
       });
     }
 
