@@ -2082,6 +2082,21 @@ Structure your response as:
 
 [DESCRIBE YOUR WORKLOAD — include: current infrastructure, expected traffic/load, compliance requirements, team expertise, budget constraints, and specific services you need to compare]`,
         tags: ["cloud", "architecture", "aws", "gcp", "azure", "infrastructure", "devops"]
+      },
+      {
+        id: "sync-config-files",
+        title: "Config File Sync Rule",
+        category: "Coding & Tech",
+        popular: true,
+        description: "Keeps paired config files identical — any edit to one must be mirrored to the other in the same commit, with a drift-check safeguard.",
+        prompt: `# Config File Sync Rule
+
+\`CLAUDE.md\` (Claude Code) and \`AGENTS.md\` (Codex) must stay **identical**.
+
+Whenever you edit either file, apply the **exact same change** to the other file and commit both together. No exceptions.
+
+If they've already drifted, ask the user which version is the source of truth before proceeding.`,
+        tags: ["claude-md", "workflow", "config", "sync"]
       }
     ];
 
