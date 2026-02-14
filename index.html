@@ -726,7 +726,7 @@
         <button class="finder-btn-icon" onclick="openFinderIn('https://grok.com/')" title="Copy & open in Grok">
           <img src="assets/grok.svg" alt="Grok" class="icon-invert">
         </button>
-        <span class="finder-feedback" id="finderFeedback">Copied — paste into the chat</span>
+        <span class="finder-feedback" id="finderFeedback"></span>
       </div>
     </div>
     <div id="promptContainer"></div>
@@ -1945,23 +1945,26 @@ If NO prompts match the request:
 ${catalog}`;
     }
 
-    function showFinderFeedback() {
+    function showFinderFeedback(msg) {
       const feedback = document.getElementById('finderFeedback');
+      feedback.textContent = msg;
       feedback.classList.add('show');
-      setTimeout(() => feedback.classList.remove('show'), 3000);
+      setTimeout(() => feedback.classList.remove('show'), 4000);
     }
 
     function generateFinderPrompt() {
       const metaPrompt = buildFinderPrompt();
       if (!metaPrompt) return;
-      navigator.clipboard.writeText(metaPrompt).then(showFinderFeedback);
+      navigator.clipboard.writeText(metaPrompt).then(() => {
+        showFinderFeedback('Copied! Now paste it into any AI chatbot and send.');
+      });
     }
 
     function openFinderIn(url) {
       const metaPrompt = buildFinderPrompt();
       if (!metaPrompt) return;
       navigator.clipboard.writeText(metaPrompt).then(() => {
-        showFinderFeedback();
+        showFinderFeedback('Copied! Opening now — just paste (Ctrl+V) and send.');
         window.open(url, '_blank');
       });
     }
