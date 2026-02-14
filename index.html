@@ -551,37 +551,30 @@
       opacity: 1;
     }
 
-    .finder-btn-chatgpt {
+    .finder-btn-icon {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--text);
-      background: var(--recessed);
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: none;
       border: 1px solid var(--border);
-      padding: 7px 14px;
       cursor: pointer;
-      transition: border-color 0.15s ease, background 0.15s ease;
+      transition: border-color 0.15s ease, opacity 0.15s ease;
+      opacity: 0.6;
     }
 
-    .finder-btn-chatgpt:hover {
+    .finder-btn-icon:hover {
       border-color: var(--accent);
-      background: color-mix(in srgb, var(--accent) 6%, transparent);
+      opacity: 1;
     }
 
-    .finder-btn-chatgpt:disabled {
-      opacity: 0.4;
-      cursor: default;
+    .finder-btn-icon img {
+      width: 16px;
+      height: 16px;
     }
 
-    .finder-btn-chatgpt img {
-      width: 14px;
-      height: 14px;
-    }
-
-    [data-theme="dark"] .finder-btn-chatgpt img.icon-invert {
+    [data-theme="dark"] .finder-btn-icon img.icon-invert {
       filter: invert(1);
     }
 
@@ -727,11 +720,11 @@
       <textarea class="finder-textarea" id="finderInput" placeholder="e.g. I want to unify my web app's UI and make it look consistent..."></textarea>
       <div class="finder-actions">
         <button class="finder-btn" id="finderBtn" onclick="generateFinderPrompt()">Generate & Copy</button>
-        <button class="finder-btn-chatgpt" onclick="openFinderIn('https://chatgpt.com/')">
-          <img src="assets/chatgpt.svg" alt="ChatGPT" class="icon-invert"> Open in ChatGPT
+        <button class="finder-btn-icon" onclick="openFinderIn('https://chatgpt.com/')" title="Copy & open in ChatGPT">
+          <img src="assets/chatgpt.svg" alt="ChatGPT" class="icon-invert">
         </button>
-        <button class="finder-btn-chatgpt" onclick="openFinderIn('https://grok.com/')">
-          <img src="assets/grok.svg" alt="Grok" class="icon-invert"> Open in Grok
+        <button class="finder-btn-icon" onclick="openFinderIn('https://grok.com/')" title="Copy & open in Grok">
+          <img src="assets/grok.svg" alt="Grok" class="icon-invert">
         </button>
         <span class="finder-feedback" id="finderFeedback">Copied — paste into the chat</span>
       </div>
