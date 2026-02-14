@@ -551,6 +551,40 @@
       opacity: 1;
     }
 
+    .finder-btn-chatgpt {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--recessed);
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .finder-btn-chatgpt:hover {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 6%, transparent);
+    }
+
+    .finder-btn-chatgpt:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    .finder-btn-chatgpt img {
+      width: 14px;
+      height: 14px;
+    }
+
+    [data-theme="dark"] .finder-btn-chatgpt img.icon-invert {
+      filter: invert(1);
+    }
+
     /* ---- No results ---- */
     .no-results {
       color: var(--text-secondary);
@@ -693,7 +727,13 @@
       <textarea class="finder-textarea" id="finderInput" placeholder="e.g. I want to unify my web app's UI and make it look consistent..."></textarea>
       <div class="finder-actions">
         <button class="finder-btn" id="finderBtn" onclick="generateFinderPrompt()">Generate & Copy</button>
-        <span class="finder-feedback" id="finderFeedback">Copied to clipboard — paste into any AI</span>
+        <button class="finder-btn-chatgpt" onclick="openFinderIn('https://chatgpt.com/')">
+          <img src="assets/chatgpt.svg" alt="ChatGPT" class="icon-invert"> Open in ChatGPT
+        </button>
+        <button class="finder-btn-chatgpt" onclick="openFinderIn('https://grok.com/')">
+          <img src="assets/grok.svg" alt="Grok" class="icon-invert"> Open in Grok
+        </button>
+        <span class="finder-feedback" id="finderFeedback">Copied — paste into the chat</span>
       </div>
     </div>
     <div id="promptContainer"></div>
@@ -1882,13 +1922,13 @@ My wish: [DESCRIBE WHAT YOU WISH EXISTED]`,
       document.getElementById('finderPanel').classList.toggle('open');
     }
 
-    function generateFinderPrompt() {
+    function buildFinderPrompt() {
       const input = document.getElementById('finderInput').value.trim();
-      if (!input) return;
+      if (!input) return null;
 
       const catalog = PROMPTS.map(p => `- **${p.title}**: ${p.description}`).join('\n');
 
-      const metaPrompt = `You are a prompt recommendation assistant. A user needs help finding the right prompts from a curated library called Prompt Vault.
+      return `You are a prompt recommendation assistant. A user needs help finding the right prompts from a curated library called Prompt Vault.
 
 **User's Request:**
 ${input}
@@ -1910,11 +1950,26 @@ If NO prompts match the request:
 
 **Available Prompts:**
 ${catalog}`;
+    }
 
+    function showFinderFeedback() {
+      const feedback = document.getElementById('finderFeedback');
+      feedback.classList.add('show');
+      setTimeout(() => feedback.classList.remove('show'), 3000);
+    }
+
+    function generateFinderPrompt() {
+      const metaPrompt = buildFinderPrompt();
+      if (!metaPrompt) return;
+      navigator.clipboard.writeText(metaPrompt).then(showFinderFeedback);
+    }
+
+    function openFinderIn(url) {
+      const metaPrompt = buildFinderPrompt();
+      if (!metaPrompt) return;
       navigator.clipboard.writeText(metaPrompt).then(() => {
-        const feedback = document.getElementById('finderFeedback');
-        feedback.classList.add('show');
-        setTimeout(() => feedback.classList.remove('show'), 3000);
+        showFinderFeedback();
+        window.open(url, '_blank');
       });
     }
 
