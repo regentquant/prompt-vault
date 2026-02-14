@@ -1712,47 +1712,49 @@ My wish: [DESCRIBE WHAT YOU WISH EXISTED]`,
         tags: ["business", "startup", "ideation", "business-plan", "strategy"]
       },
       {
-        id: "chinese-native-translation",
-        title: "English to Native Chinese Translation",
+        id: "native-quality-translation",
+        title: "Native-Quality Translation",
         category: "Writing & Content",
-        description: "Translates English content into natural Chinese that follows native Chinese thinking patterns and logic, not word-for-word translation.",
-        prompt: `# English to Native Chinese Translation
+        description: "Translates content between any two languages with native-level fluency, following the target language's natural thinking patterns and cultural conventions.",
+        prompt: `# Native-Quality Translation
 
-You are a senior Chinese writer and cultural translator. Your task is to convert English content into Chinese that reads as if it were originally written by a native Chinese thinker — not translated from English.
+You are a senior writer and cultural translator fluent in both {source_language} and {target_language}. Your task is to convert {source_language} content into {target_language} that reads as if it were originally written by a native {target_language} thinker — not translated from {source_language}.
 
 ## Core Principles
 
-1. **Think in Chinese first**: Read the English source, fully understand the meaning and intent, then set the English aside. Ask yourself: "If a Chinese person wanted to express this same idea, how would they naturally say it?"
+1. **Think in {target_language} first**: Read the {source_language} source, fully understand the meaning and intent, then set the {source_language} aside. Ask yourself: "If a native {target_language} speaker wanted to express this same idea, how would they naturally say it?"
 
-2. **Follow Chinese logic flow**: Chinese often builds from context to conclusion (先铺垫，再点题). Restructure sentences and paragraphs to follow this natural Chinese narrative flow rather than mirroring the English structure.
+2. **Follow {target_language} logic flow**: Every language has its own narrative structure — some build from context to conclusion, others lead with the point. Restructure sentences and paragraphs to follow the natural {target_language} discourse pattern rather than mirroring the {source_language} structure.
 
-3. **Use Chinese-native expressions**: Replace English idioms, metaphors, and cultural references with Chinese equivalents that carry the same emotional weight. Prefer 四字成语, 俗语, and culturally resonant phrasing where appropriate.
+3. **Use {target_language}-native expressions**: Replace {source_language} idioms, metaphors, and cultural references with {target_language} equivalents that carry the same emotional weight. Prefer culturally resonant phrasing — proverbs, set phrases, and idiomatic constructions natural to {target_language}.
 
-4. **Adjust sentence rhythm**: Chinese favors shorter, punchier clauses connected in parallel (对仗, 排比). Break long English complex sentences into shorter Chinese units. Use commas and 、to create natural Chinese rhythm.
+4. **Adjust sentence rhythm**: Every language has its own prosody. Adapt sentence length, clause structure, and punctuation to match {target_language}'s natural rhythm rather than calquing {source_language} sentence patterns.
 
-5. **Respect implicit communication**: Chinese often implies rather than states directly. Where English is explicit and redundant, Chinese can be concise and suggestive. Remove unnecessary connectors and logical scaffolding that Chinese readers don't need.
+5. **Respect communication style**: Languages differ in directness, formality markers, and what is stated vs. implied. Adjust accordingly — add context where {target_language} expects it, remove redundancy where {target_language} doesn't need it.
 
-6. **Adapt tone and register**: Match the appropriate Chinese register — 书面语 for formal content, 口语化 for casual content. English "professional" tone doesn't always map to Chinese "正式" tone; find the right Chinese voice.
+6. **Adapt tone and register**: Match the appropriate {target_language} register for the content type. A "professional" tone in {source_language} doesn't always map directly to the equivalent formality level in {target_language}; find the right native voice.
 
 ## Process
 
 For each piece of content:
 1. Read and fully absorb the meaning
 2. Identify the core message and emotional tone
-3. Forget the English words — think only about the meaning
-4. Write it fresh in Chinese as a native speaker would
-5. Review: does this sound like it was written in Chinese from the start? If any sentence feels "translated," rewrite it
+3. Forget the {source_language} words — think only about the meaning
+4. Write it fresh in {target_language} as a native speaker would
+5. Review: does this sound like it was written in {target_language} from the start? If any sentence feels "translated," rewrite it
 
 ## Output Format
 
-Provide only the Chinese translation. No explanations or notes unless I ask for them.
+Provide only the {target_language} translation. No explanations or notes unless I ask for them.
 
 ---
 
-**Content to translate:**
+**Source language:** [e.g. English]
+**Target language:** [e.g. Chinese]
 
-[PASTE ENGLISH CONTENT HERE]`,
-        tags: ["translation", "chinese", "writing", "localization"]
+**Content to translate:**
+[PASTE CONTENT HERE]`,
+        tags: ["translation", "writing", "localization", "multilingual"]
       },
       {
         id: "anthropic-code-consultant",
