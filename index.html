@@ -350,6 +350,20 @@
       vertical-align: middle;
     }
 
+    .official-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 1px 6px;
+      margin-left: 8px;
+      border-radius: 4px;
+      vertical-align: middle;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    }
+
     .action-btn {
       display: flex;
       align-items: center;
@@ -1360,6 +1374,48 @@ If the company is Chinese-listed or a Chinese ADR:
         description: "Adds features or fixes to existing code while preserving everything else — highlights exactly what changed with comments and full code output.",
         prompt: `# Vibe Coder for Refactoring\n\nLook at the below code.\n\n[paste the full code]\n\nThis code is doing something. [describe current function]\n\nI want to make it do something extra. [describe change]\n\nPlease add the necessary changes and add comments to highlight exactly where you made the change. Don't touch any other part of the code.\n\nGive me the full code with your changes added. Give me a short explanation of the changes you made.`,
         tags: ["coding", "refactoring", "iterative", "feature-addition"]
+      },
+      {
+        id: "improve-my-prompt",
+        title: "Improve My Prompt",
+        category: "Prompt Engineering",
+        popular: true,
+        description: "Paste any prompt and get back a clearer, more specific, and more effective version — the fastest way to level up your prompting.",
+        prompt: `# Improve My Prompt\n\nHere's my prompt:\n\n[paste your prompt]\n\nPlease improve it by:\n- Making it clearer and more specific\n- Removing ambiguity\n- Adding structure (numbered steps, bullet points) where helpful\n- Including any missing context the AI would need\n- Optimizing for the best possible output\n\nReturn the improved prompt, then briefly explain what you changed and why.`,
+        tags: ["prompt-engineering", "optimization", "meta"]
+      },
+      {
+        id: "prompt-generator",
+        title: "Prompt Generator",
+        category: "Prompt Engineering",
+        popular: true,
+        description: "Describe what you need in plain language and get back a well-structured, ready-to-use prompt — let AI write your prompts for you.",
+        prompt: `# Prompt Generator\n\nYou are an expert prompt engineer. I will describe what I need, and you will write the best possible prompt for it.\n\nFor each request:\n1. Ask 2–3 clarifying questions if the goal is ambiguous\n2. Write a complete, well-structured prompt that includes context, clear instructions, and output format\n3. Explain briefly why you structured it that way\n\nHere's what I need:\n\n[describe your goal]`,
+        tags: ["prompt-engineering", "generator", "meta"]
+      },
+      {
+        id: "system-prompt-creator",
+        title: "System Prompt Creator",
+        category: "Prompt Engineering",
+        description: "Generates custom system prompts that define an AI's role, personality, constraints, and behavior — ideal for building assistants and chatbots.",
+        prompt: `# System Prompt Creator\n\nWrite a system prompt that makes the AI act as a [role].\n\nInclude:\n- **Identity**: Who the AI is and its area of expertise\n- **Behavior**: Tone, communication style, and personality traits\n- **Constraints**: What it should and should not do\n- **Format**: How it should structure its responses\n- **Examples**: 1–2 example interactions showing ideal behavior\n\nRole: [describe the role]\nBehavior: [describe desired tone and style]\nConstraints: [list any rules or limitations]`,
+        tags: ["prompt-engineering", "system-prompt", "chatbot", "role"]
+      },
+      {
+        id: "mega-prompt-builder",
+        title: "Mega Prompt Builder",
+        category: "Prompt Engineering",
+        description: "Turns a simple goal into a detailed mega prompt with context, step-by-step instructions, output format, and examples — maximum output quality in one shot.",
+        prompt: `# Mega Prompt Builder\n\nYou are a prompt architect. Given a goal, create a comprehensive mega prompt that maximizes output quality.\n\nYour mega prompt must include:\n1. **Context**: Background information the AI needs\n2. **Role**: Who the AI should act as\n3. **Instructions**: Step-by-step task breakdown\n4. **Output format**: Exact structure of the desired response\n5. **Constraints**: Rules, tone, length, what to avoid\n6. **Examples**: At least one example of ideal output\n\nMy goal:\n\n[describe what you want to achieve]`,
+        tags: ["prompt-engineering", "mega-prompt", "advanced", "meta"]
+      },
+      {
+        id: "creative-prompt-reframing",
+        title: "Creative Prompt Reframing",
+        category: "Prompt Engineering",
+        description: "Rephrases vague or blocked requests into specific, well-framed prompts that get complete and useful answers from any AI model.",
+        prompt: `# Creative Prompt Reframing\n\nI have a request that isn't getting the results I want. Help me reframe it.\n\nOriginal request:\n\n[paste your prompt or describe what you tried]\n\nWhat went wrong:\n\n[describe the issue — too vague, got refused, incomplete output, etc.]\n\nPlease:\n1. Identify why the original framing is problematic\n2. Rewrite it using a more specific, constructive angle\n3. Add context, role-setting, or constraints that help the AI understand the real intent\n4. Provide 2–3 alternative framings if applicable\n\nThe goal is to get complete, useful answers by asking better questions.`,
+        tags: ["prompt-engineering", "reframing", "troubleshooting"]
       }
     ];
 
@@ -1478,7 +1534,7 @@ If the company is Chinese-listed or a Chinese ADR:
             <div class="prompt-row" data-id="${p.id}">
               <div class="prompt-summary" onclick="togglePrompt('${p.id}')">
                 <div class="prompt-left">
-                  <div class="prompt-title">${esc(p.title)}${p.popular ? '<img class="popular-icon" src="assets/popular.svg" alt="Popular">' : ''}${searchQuery ? `<span class="prompt-tag">${esc(p.category)}</span>` : ''}</div>
+                  <div class="prompt-title">${esc(p.title)}${p.popular ? '<img class="popular-icon" src="assets/popular.svg" alt="Popular">' : ''}${p.official ? `<span class="official-badge">${esc(p.official)}</span>` : ''}${searchQuery ? `<span class="prompt-tag">${esc(p.category)}</span>` : ''}</div>
                   <div class="prompt-desc">${esc(p.description)}</div>
                 </div>
                 <div class="prompt-right">
