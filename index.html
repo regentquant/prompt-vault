@@ -2099,6 +2099,66 @@ Whenever you edit either file, apply the **exact same change** to the other file
 
 If they've already drifted, ask the user which version is the source of truth before proceeding.`,
         tags: ["claude-md", "workflow", "config", "sync"]
+      },
+      {
+        id: "podcast-hierarchical-summary",
+        title: "Podcast Hierarchical Summary",
+        category: "Editor's Picks",
+        description: "Summarize a podcast transcript as a deep hierarchical outline that preserves every fact, number, and named example.",
+        prompt: `# Podcast Hierarchical Summary
+
+You will summarize a podcast transcript by producing a deep hierarchical
+outline. The goal is to preserve the conversation's logical structure while
+capturing EVERY meaningful fact, claim, number, example, and idea.
+
+Transcript file: /Users/curryyao/Desktop/TEST/NoteGPT_TRANSCRIPT_The Supply
+and Demand of AI Tokens  Dylan Patel Interview.txt
+
+Approach:
+1. Read the entire transcript (all 321 lines).
+2. Identify the major themes (typically 5-10 for a 45-minute podcast).
+3. For each theme, build a nested outline with up to 4 levels of depth:
+   - Level 1 (##): Theme
+   - Level 2 (-): Sub-claim or sub-question discussed under that theme
+   - Level 3 (  -): Specific point, evidence, or example
+   - Level 4 (    -): Numbers, names, quotes, or qualifying detail
+
+Format:
+# {Episode title} — Hierarchical Summary
+
+**Setup:** 1-2 sentence framing of who's talking and the core thesis.
+
+## Theme 1: {short title}
+- Sub-claim or question
+  - Specific point or evidence
+    - Numbers, names, qualifying detail
+  - Another specific point
+- Another sub-claim
+  ...
+
+## Theme 2: {short title}
+...
+
+Hard requirements:
+- EVERY concrete number, name, company, dollar figure, percentage, timeframe,
+  or named example must appear somewhere in the outline. Lose nothing.
+- EVERY distinct claim or idea must appear as a bullet — do not collapse two
+  distinct ideas into one bullet.
+- Preserve the guest's specific phrasing for striking concepts (e.g.,
+  "phantom GDP", "claude psychosis", "permanent underclass", "software-only
+  singularity", "tokconomics").
+- IGNORE sponsor reads/ads (Ramp, WorkOS, Felix/Rogo, Vanta, Ridgeline).
+  Do not include them.
+- No prose paragraphs. Outline only.
+- Use the timestamps in the transcript as a checklist — verify you didn't
+  skip any section.
+
+Write your final summary to: /Users/curryyao/Desktop/TEST/summary_v2_hierarchical.md
+
+After writing the file, reply with a one-paragraph note: how many themes you
+identified, total bullet count (approximate), and any tradeoffs you made.
+Keep under 150 words.`,
+        tags: ["podcast", "summarization", "outline", "research"]
       }
     ];
 
@@ -2111,11 +2171,12 @@ If they've already drifted, ask the user which version is the source of truth be
     const searchInput = document.getElementById('searchInput');
     const totalCount = document.getElementById('totalCount');
 
-    let activeCategory = 'All';
+    let activeCategory = "Editor's Picks";
     let searchQuery = '';
 
     // Fixed category order — all 10 always shown
     const ALL_CATEGORIES = [
+      "Editor's Picks",
       "Writing & Content",
       "Coding & Tech",
       "Business & Finance",
@@ -2139,10 +2200,12 @@ If they've already drifted, ask the user which version is the source of truth be
       const categories = getCategories();
       let html = '';
 
-      html += `<li><button class="${activeCategory === 'All' ? 'active' : ''}" data-cat="All">All<span class="cat-count">${PROMPTS.length}</span></button></li>`;
       for (const cat of categories) {
         const isActive = activeCategory === cat;
         html += `<li><button class="${isActive ? 'active' : ''}" data-cat="${cat}">${cat}<span class="cat-count">${countByCategory(cat)}</span></button></li>`;
+        if (cat === "Editor's Picks") {
+          html += `<li><button class="${activeCategory === 'All' ? 'active' : ''}" data-cat="All">All<span class="cat-count">${PROMPTS.length}</span></button></li>`;
+        }
       }
 
       categoryNav.innerHTML = html;
