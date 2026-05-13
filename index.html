@@ -2154,6 +2154,43 @@ After writing
 
 Reply with a one-paragraph note (under 150 words): how many themes you identified, approximate total bullet count, and any tradeoffs you made (e.g., where you had to choose between depth and breadth, anything that resisted clean hierarchical placement).`,
         tags: ["summarization", "outline", "research", "transcript", "content"]
+      },
+      {
+        id: "native-chinese-translator",
+        title: "Native Chinese Translator",
+        category: ["Editor's Picks", "Writing & Content"],
+        description: "Translate English into natural, native-sounding Simplified Chinese using the 信达雅 (faithfulness/expressiveness/elegance) framework.",
+        prompt: `# Native Chinese Translator
+
+You are an expert translator with native-level fluency in English and Chinese, specializing in translations that read as if originally written in Chinese by an educated native speaker — not as English wearing Chinese clothes.
+
+Translate the following text into Simplified Chinese.
+
+Work through this process internally before producing your final output:
+
+1. COMPREHEND — Identify the text's purpose, register (formal/casual/technical/literary/marketing), intended audience, and any idioms, cultural references, wordplay, or ambiguity.
+
+2. DRAFT — Produce a faithful translation that preserves meaning, tone, and intent. Translate thought-for-thought, not word-for-word.
+
+3. REFINE — Critique your draft against these criteria, then revise:
+   • 信 Faithfulness: Every nuance, hedge, and implication preserved.
+   • 达 Expressiveness: Reads as natural Chinese. Eliminate "translationese" — overuse of 的, awkward passives, English-style long modifier chains, literal renderings of "it is...that" or "there is/are" constructions.
+   • 雅 Elegance: Register, rhythm, and word choice match the source's tone.
+   • Idiom: Replace English idioms with equivalent Chinese expressions (成语 or colloquialisms) when meaning is preserved; keep literal only when cultural specificity matters.
+   • Structure: Restructure sentences when Chinese rhetoric demands it (topic-comment order, four-character phrases, parallel clauses).
+   • Terminology: Use the conventional Chinese term for technical/domain vocabulary. For proper nouns without an established Chinese name, use standard transliteration with the original in parentheses on first mention.
+
+Constraints:
+- Preserve all formatting: markdown, line breaks, lists, code blocks, tables.
+- Do not translate code, variable names, URLs, or proper nouns that conventionally remain in English (e.g., iPhone, GitHub).
+- If a term is ambiguous, pick the most contextually appropriate rendering and continue — do not stop to ask.
+- Output only the final translation. No preamble, no source text, no notes.
+
+TEXT TO TRANSLATE:
+"""
+{text}
+"""`,
+        tags: ["translation", "chinese", "language", "writing"]
       }
     ];
 
@@ -2185,9 +2222,14 @@ Reply with a one-paragraph note (under 150 words): how many themes you identifie
       return ALL_CATEGORIES;
     }
 
+    // A prompt may belong to multiple categories — normalize to array
+    function categoriesOf(p) {
+      return Array.isArray(p.category) ? p.category : [p.category];
+    }
+
     // Count prompts per category
     function countByCategory(cat) {
-      return PROMPTS.filter(p => p.category === cat).length;
+      return PROMPTS.filter(p => categoriesOf(p).includes(cat)).length;
     }
 
     // Build sidebar
@@ -2212,7 +2254,7 @@ Reply with a one-paragraph note (under 150 words): how many themes you identifie
       let results = PROMPTS;
 
       if (activeCategory !== 'All') {
-        results = results.filter(p => p.category === activeCategory);
+        results = results.filter(p => categoriesOf(p).includes(activeCategory));
       }
 
       if (searchQuery) {
@@ -2228,12 +2270,13 @@ Reply with a one-paragraph note (under 150 words): how many themes you identifie
       return results;
     }
 
-    // Group prompts by category
+    // Group prompts by category — multi-category prompts group under their primary (first) category
     function groupByCategory(prompts) {
       const groups = new Map();
       for (const p of prompts) {
-        if (!groups.has(p.category)) groups.set(p.category, []);
-        groups.get(p.category).push(p);
+        const primary = categoriesOf(p)[0];
+        if (!groups.has(primary)) groups.set(primary, []);
+        groups.get(primary).push(p);
       }
       for (const [, list] of groups) {
         list.sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0));
@@ -2275,7 +2318,7 @@ Reply with a one-paragraph note (under 150 words): how many themes you identifie
             <div class="prompt-row" data-id="${p.id}">
               <div class="prompt-summary" onclick="togglePrompt('${p.id}')">
                 <div class="prompt-left">
-                  <div class="prompt-title">${esc(p.title)}${p.popular ? '<img class="popular-icon" src="assets/popular.svg" alt="Popular">' : ''}${p.official ? `<span class="official-badge">${esc(p.official)}</span>` : ''}${searchQuery ? `<span class="prompt-tag">${esc(p.category)}</span>` : ''}</div>
+                  <div class="prompt-title">${esc(p.title)}${p.popular ? '<img class="popular-icon" src="assets/popular.svg" alt="Popular">' : ''}${p.official ? `<span class="official-badge">${esc(p.official)}</span>` : ''}${searchQuery ? `<span class="prompt-tag">${esc(categoriesOf(p)[0])}</span>` : ''}</div>
                   <div class="prompt-desc">${esc(p.description)}</div>
                 </div>
                 <div class="prompt-right">
